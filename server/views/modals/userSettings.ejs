@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h3>User Settings</h3>
+</div>
+
+<div class="modal-body">
+    <div ng-show="isLoggedIn">
+        <div ng-show="CURRENT_VIEW == DEFAULT_VIEW">
+            <form ng-submit="editUserSettings()">
+                <p class="small-spacing">Username</p>
+                <input type="text" ng-model="username" />
+                <p class="small-spacing">Email</p>
+                <input type="text" ng-model="email" /></br>
+                <input type="submit" class="btn btn-primary" value="Submit"/>
+            </form>
+            <p ng-show="showErrorText" class="text-error">{{ errorText }}</p>
+            <p ng-show="showSuccessText" class="text-success">{{ successText }}</p>
+            <a ng-click="changeView(PICTURE_VIEW)">Change Profile Picture</a></br>
+            <a ng-click="changeView(PASSWORD_VIEW)">Change Password</a>
+        </div>
+        <div ng-show="CURRENT_VIEW == PASSWORD_VIEW">
+            <form ng-submit="editUserPassword()">
+                <p class="small-spacing">Old password</p>
+                <input type="password" ng-model="oldPassword"/>
+                <p class="small-spacing">New password</p>
+                <input type="password" ng-model="password"/>
+                <p class="small-spacing">Repeat new password</p>
+                <input type="password" ng-model="password2"/></br>
+                <input type="submit" class="btn btn-primary" value="Submit"/>
+            </form>
+            <p ng-show="showErrorText" class="text-error">{{ errorText }}</p>
+            <p ng-show="showSuccessText" class="text-success">{{ successText }}</p>
+            <a ng-click="changeView(DEFAULT_VIEW)"><< Back</a>
+        </div>
+        <div ng-show="CURRENT_VIEW == PICTURE_VIEW">
+            <h5>Current Picture</h5>
+            <div class="user-picture-settings-screen">
+                <img class="profile-picture" ng-src="{{picture}}"/>
+            </div>
+            <div class="small-vertical-spacing"></div>
+            <button ng-click="deleteUserPicture()" ng-disabled="!canClickEditPicture" class="btn btn-warning">Reset</button>
+            <div class="horizontal-row"></div>
+            <h5>Upload New Picture</h5>
+            <form ng-submit="editUserPicture()">
+                <input type="file" accept="image/*" name="file" onchange="angular.element(this).scope().onUploadFileChanged(this.files)" />
+                <div class="small-vertical-spacing"></div>
+                <input type="submit" class="btn btn-primary" value="Submit" ng-disabled="!canClickEditPicture" /> <span ng-show="showUploadProgressText"> Uploading... {{ uploadProgress }}% complete</span>
+            </form>
+            <p ng-show="showErrorText" class="text-error">{{ errorText }}</p>
+            <p ng-show="showSuccessText" class="text-success">{{ successText }}</p>
+            <a ng-click="changeView(DEFAULT_VIEW)"><< Back</a>
+        </div>
+    </div>
+    <div ng-show="!isLoggedIn">
+        <p>To edit your profile, you need to be a registered user.</p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button ng-click="onCloseClicked()" class="btn">Close</button>
+</div>

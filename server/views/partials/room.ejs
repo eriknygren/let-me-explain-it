@@ -1,0 +1,130 @@
+<div ng-controller="MainRoomController">
+    <div ng-show="!isLoaded" id="front-page-bg">
+        <div id="loading-room-text">
+            <h2>Setting up room... Please hold on</h2>
+        </div>
+    </div>
+    <div ng-show="isLoaded">
+        <div id="left-pane">
+            <div id="remote-users" ng-controller="RemoteUsersController">
+                <div class="remote-user" ng-repeat="user in remoteUsers">
+                    <div class="user-picture">
+                        <img class="profile-picture" ng-src="{{user.picture}}"/>
+                    </div>
+                    <div class="user-settings">
+                        <p class="small-spacing ellipsis">{{ user.username }}</p>
+                        <div class="horizontal-row"></div>
+                        <div>
+                            <small>
+                                <p class="small-spacing"><strong>Current Tab:</strong></p>
+                                <p class="ellipsis">{{ user.currentTab }}</p>
+                            </small>
+                            <div>
+                                <strong>
+                                    <small>
+                                        <i class="icon-microphone"></i>
+                                        <span ng-show="!user.isVoiceChatEnabled"> Off </span>
+                                        <span ng-show="user.isVoiceChatEnabled"> On </span>
+                                    </small>
+                                </strong>
+                                <input class="volume-control"
+                                       ng-show="isVoiceChatEnabled && user.isVoiceChatEnabled"
+                                       id="slide" type="range"
+                                       min="0" max="100" step="2"
+                                       ng-model="volume"
+                                       ng-change="onVolumeChange(user.id, volume)" />
+                                <i class="icon-volume-up" ng-show="isVoiceChatEnabled && user.isVoiceChatEnabled"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="center-pane">
+            <div id="toolbar" ng-controller="ToolbarController">
+                <button id="invite-friends-button" class="btn btn-mini" ng-click="onInviteFriendsClicked()">Invite Friends</button>
+                <div ng-show="activeTab == 'Drawing Board'" class="pull-left">
+                    <button colorpicker class="btn btn-mini" data-color="defaultColor" ng-model="brushColor" title="Select color"><i colorpickericondirective model="brushColor" class="color-icon"></i> <span class="caret"></span></button>
+                    <button class="btn btn-mini btn-danger" ng-click="onResetClicked()" title="Reset drawing board"><i class="icon-remove icon-white"></i></button>
+                    <button ng-click="onResizeClicked()" class="btn btn-mini btn-warning" title="Resize"><i class="icon-resize-full icon-white"></i></button>
+                </div>
+                <div ng-show="activeTab == 'Maps'" class="pull-left">
+                    <li ng-show="!isFollowing" class="dropdown">
+                        <a class="dropdown-toggle btn btn-mini btn-primary" title="Select a user to follow on the map">
+                            Follow <span class="caret"></span>
+                        </a>
+                        <ul id="maps-follow-dropdown-menu" class="dropdown-menu">
+                            <li ng-repeat="user in remoteUsers">
+                                <a class="ellipsis" ng-click="followUser(user.id)">{{user.username}}</a>
+                            </li>
+                            <li ng-show="remoteUsers.length < 1">
+                                <span class="empty-list-text ellipsis">No users to follow</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <button ng-show="isFollowing" class="btn btn-mini btn-primary" ng-model="isFollowing" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+                        Stop Following
+                    </button>
+                </div>
+            </div>
+            <div id="tabs" class="no-text-selection" ng-controller="TabController">
+                <tabset>
+                    <tab select="tabSelected('Drawing Board')" heading="Drawing Board">
+                        <div>
+                            <canvas width="510" height="510" id="canvas" drawdirective></canvas>
+                        </div>
+                    </tab>
+                    <tab select="tabSelected('Maps')" heading="Maps">
+                        <div>
+                            <map id="map"></map>
+                        </div>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+        <div id="right-pane">
+            <div id="chat" ng-controller="ChatController">
+                <div id="chat-messages" chatmessagesdirective></div>
+                <form ng-submit="sendMessage()">
+                    <div class="input-append">
+                        <input id="chat-message-input"
+                                  type="text"
+                                  ng-model="chatMessage"
+                                  placeholder="Write a chat message here">
+                        <input class="btn btn-mini btn-inverse" type="submit" value=">>">
+                    </div>
+                </form>
+            </div>
+            <div id="local-user" ng-controller="LocalUserController">
+                <div class="user-picture">
+                    <img class="profile-picture" ng-src="{{ picture }}"/>
+                </div>
+                <div class="user-settings">
+                    <p class="small-spacing"><small><strong>Your profile</strong></small></p>
+                    <p class="small-spacing ellipsis">{{ username }}</p>
+                    <div class="horizontal-row"></div>
+                    <div>
+                        <div ng-show="isWebRTCSupported">
+                            <button class="btn btn-mini btn-block btn-primary"
+                                    title="Turn on voice chat"
+                                    ng-model="isVoiceChatEnabled"
+                                    btn-checkbox
+                                    btn-checkbox-true="true"
+                                    btn-checkbox-false="false">
+                                <div ng-show="!isVoiceChatEnabled"><i class="icon-volume-up icon-white"></i> Enable Voice Chat</div>
+                                <div ng-show="isVoiceChatEnabled"><i class="icon-volume-off icon-white"></i> Disable Voice Chat</div>
+                            </button>
+                        </div>
+                        <div ng-show="!isWebRTCSupported">
+                            <p>Voice Chat is not supported in your browser. To enable voice communication,
+                            please use an updated version of Chrome or Firefox.</p>
+                        </div>
+                        <div class="small-vertical-spacing"></div>
+                    </div>
+
+                    <button class="btn btn-block btn-mini" ng-click="showLocalUserOptions()">Options</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

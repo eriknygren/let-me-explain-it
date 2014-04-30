@@ -1,0 +1,75 @@
+<div id="front-page-bg"></div>
+<div id="login-content">
+    <div id="login-centralized" logindirective>
+        <div id="login-container" ng-controller="LoginController">
+            <div class="no-text-selection standard-cursor">
+                <h1 class="front-page-text-background">LetMeExplain.It</h1></br>
+                <h5 class="front-page-text-background">The simple and hassle free collaboration tool</h5>
+            </div>
+            <div id="login-container-left-pane">
+                <h5 class="no-margin">Join or Create Room</h5>
+                <p>Welcome, to get started enter your room name and press go.</p>
+                <div class="form-horizontal">
+                    <form ng-submit="joinRoom()">
+                        <input type="text" ng-model="roomName" class="display-inline-block" placeholder="Enter Room Name"/>
+                        <input type="submit" ng-disabled="!canClickJoin" class="btn btn-primary" value="Go"/>
+                    </form>
+                </div>
+                <p ng-show="showroomJoinErrorText" class="text-error">{{ roomJoinErrorText }}</p>
+                <p ng-show="!isLoggedIn"><small>Currently joining the room as a guest, log in or register to use your profile. <a ng-click="isRegistrationInfoTextCollapsed = !isRegistrationInfoTextCollapsed">Why should i register?</a></small></p>
+                <div ng-show="!isLoggedIn" collapse="isRegistrationInfoTextCollapsed">
+                    <small>
+                        <p class="small-spacing">Because you get to:</p>
+                        <ul>
+                            <li>Set your own username</li>
+                            <li>Set a profile picture</li>
+                        </ul>
+                    </small>
+                </div>
+            </div>
+            <div id="login-container-right-pane">
+                <p ng-show="!isLoaded">Loading..</p>
+                <div ng-show="isLoaded">
+                    <a ng-show="!isLoggedIn" ng-click="isCollapsed = !isCollapsed"><h5 class="no-margin registration-toggle">Register / Log in</h5></a>
+                    <div ng-show="!isLoggedIn" collapse="isCollapsed">
+                        <div class="horizontal-row"></div>
+                        <div>
+                            <form ng-submit="onLoginClicked()" class="no-margin">
+                                <input ng-model="username" placeholder="Username or email" type="text"/>
+                                <div class="form-horizontal">
+                                <input ng-model="password" id="login-password-input" placeholder="Password" type="password"/>
+                                <input type="submit" ng-disabled="!canClickLogin" value="Log in" id="login-button" class="btn btn-primary">
+                                </div>
+                            </form>
+                            <p class="small-spacing">
+                                <label class="remember-forgot-password"><input type="checkbox" class="remember-check-box" ng-model="rememberUser"/><span class="muted"> Remember me</span></label>
+                                <span class="separator remember-forgot-password muted">·</span>
+                                <a ng-disabled="!canClickForgotPassword" ng-click="onForgotPasswordClicked()" class="remember-forgot-password">Forgot Password</a>
+                            </p>
+                            <div class="clear"></div>
+                            <p ng-show="showLoginErrorText" class="small-spacing text-error">{{ loginErrorText }}</p>
+                            <h5>New? Register Here</h5>
+                            <div ng-show="showRegistrationErrorText">
+                                <p class="small-spacing text-error">{{ registrationErrorText }}</p>
+                            </div>
+                            <form ng-submit="registerUser()">
+                                <input type="text" ng-model="registerUsername" placeholder="Username"/>
+                                <input type="text" ng-model="registerEmail" placeholder="Email"/>
+                                <input type="password" ng-model="registerPassword" placeholder="Password"/>
+                                <input type="submit" ng-disabled="!canClickRegister" class="btn btn-warning pull-right" value="Sign up"/>
+                            </form>
+                        </div>
+                    </div>
+                    <div ng-show="isLoggedIn">
+                          <h5 class="no-margin">Welcome back {{ user.username }}</h5>
+                        <p>It is lovely to see you again.</p>
+                        <div class="pull-right">
+                            <button class="btn" ng-click="onUserSettingsClicked()">Edit profile</button>
+                            <button ng-disabled="!canClickLogout"class="btn btn-warning" ng-click="onLogoutClicked()">Sign out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

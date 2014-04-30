@@ -1,0 +1,3113 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for upstream/lib/query-interface.js</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="../../prettify.css">
+
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Helvetica Neue, Helvetica,Arial;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 10em;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Consolas, Menlo, Monaco, monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 14px;
+            font-size: 14px;
+            -moz-tab-size: 2;
+            -o-tab-size:  2;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+            xtext-decoration: line-through;
+        }
+        .missing-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { text-decoration: none; color: #000; }
+        div.coverage-summary a:visited { text-decoration: none; color: #333; }
+        div.coverage-summary a:hover { text-decoration: underline; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: url("http://yui.yahooapis.com/3.6.0/build/datatable-sort/assets/skins/sam/sort-arrow-sprite.png") no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">upstream/lib/query-interface.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">48.58% <small>(223 / 459)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">35.51% <small>(76 / 214)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">44.44% <small>(60 / 135)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">48.58% <small>(222 / 457)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">upstream/lib/</a> &#187; query-interface.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796
+797
+798
+799
+800
+801
+802
+803
+804
+805
+806
+807
+808
+809
+810
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837
+838
+839
+840
+841
+842
+843
+844
+845
+846
+847
+848
+849
+850
+851
+852
+853
+854
+855
+856
+857
+858
+859
+860
+861
+862
+863
+864
+865
+866
+867
+868
+869
+870
+871
+872
+873
+874
+875
+876
+877
+878
+879
+880
+881
+882
+883
+884
+885
+886
+887
+888
+889
+890
+891
+892
+893
+894
+895
+896
+897
+898
+899
+900
+901
+902
+903
+904
+905
+906
+907
+908
+909
+910
+911
+912
+913
+914
+915
+916
+917
+918
+919
+920
+921
+922
+923
+924
+925
+926
+927
+928
+929
+930
+931
+932
+933
+934
+935
+936
+937</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-yes">2514</span>
+<span class="cline-any cline-yes">264</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2250</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">446</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-yes">751</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-yes">384</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-yes">384</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">205</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">205</span>
+<span class="cline-any cline-yes">205</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">205</span>
+<span class="cline-any cline-yes">205</span>
+<span class="cline-any cline-yes">205</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-yes">203</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-yes">384</span>
+<span class="cline-any cline-yes">384</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-yes">384</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">262</span>
+<span class="cline-any cline-yes">262</span>
+<span class="cline-any cline-yes">261</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">83</span>
+<span class="cline-any cline-yes">83</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">289</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">289</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">72</span>
+<span class="cline-any cline-yes">25</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">289</span>
+<span class="cline-any cline-yes">289</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">289</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">172</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">218</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1967</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1967</span>
+<span class="cline-any cline-yes">1967</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1967</span>
+<span class="cline-any cline-yes">770</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">770</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">770</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1197</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1967</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1960</span>
+<span class="cline-any cline-yes">1960</span>
+<span class="cline-any cline-yes">1960</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1966</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1967</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1967</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var Utils                = require(__dirname + '/utils')
+  , DataTypes            = require(__dirname + '/data-types')
+  , SQLiteQueryInterface = require(__dirname + '/dialects/sqlite/query-interface')
+  , Transaction          = require(__dirname + '/transaction')
+&nbsp;
+module.exports = (function() {
+  var QueryInterface = function(sequelize) {
+    this.sequelize                = sequelize
+    this.QueryGenerator           = require('./dialects/' + this.sequelize.options.dialect + '/query-generator')
+    this.QueryGenerator.options   = this.sequelize.options
+    this.QueryGenerator._dialect  = this.sequelize.dialect
+    this.QueryGenerator.sequelize = this.sequelize
+  }
+  Utils.addEventEmitter(QueryInterface)
+&nbsp;
+  QueryInterface.prototype.createSchema = <span class="fstat-no" title="function not covered" >function(schema) {</span>
+<span class="cstat-no" title="statement not covered" >    var sql = this.QueryGenerator.createSchema(schema)</span>
+<span class="cstat-no" title="statement not covered" >    return queryAndEmit.call(this, sql, 'createSchema')</span>
+  }
+&nbsp;
+  QueryInterface.prototype.dropSchema = <span class="fstat-no" title="function not covered" >function(schema) {</span>
+<span class="cstat-no" title="statement not covered" >    var sql = this.QueryGenerator.dropSchema(schema)</span>
+<span class="cstat-no" title="statement not covered" >    return queryAndEmit.call(this, sql, 'dropSchema')</span>
+  }
+&nbsp;
+  QueryInterface.prototype.dropAllSchemas = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var chainer = new Utils.QueryChainer()</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      self.showAllSchemas().success(<span class="fstat-no" title="function not covered" >function(schemaNames) {</span></span>
+<span class="cstat-no" title="statement not covered" >        schemaNames.forEach(<span class="fstat-no" title="function not covered" >function(schemaName) {</span></span>
+<span class="cstat-no" title="statement not covered" >          chainer.add(self.dropSchema(schemaName))</span>
+        })
+<span class="cstat-no" title="statement not covered" >        chainer</span>
+          .run()
+          .success(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >            self.emit('dropAllSchemas', null)</span>
+<span class="cstat-no" title="statement not covered" >            emitter.emit('success', null)</span>
+          })
+          .error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >            self.emit('dropAllSchemas', err)</span>
+<span class="cstat-no" title="statement not covered" >            emitter.emit('error', err)</span>
+          })
+      }).error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >        self.emit('dropAllSchemas', err)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('error', err)</span>
+      })
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.showAllSchemas = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var showSchemasSql = self.QueryGenerator.showSchemasQuery()</span>
+<span class="cstat-no" title="statement not covered" >      self.sequelize.query(showSchemasSql, null, { raw: true }).success(<span class="fstat-no" title="function not covered" >function(schemaNames) {</span></span>
+<span class="cstat-no" title="statement not covered" >        self.emit('showAllSchemas', null)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('success', Utils._.flatten(Utils._.map(schemaNames, <span class="fstat-no" title="function not covered" >function(value){</span> <span class="cstat-no" title="statement not covered" >return (!!value.schema_name ? value.schema_name : value) }</span>)))</span>
+      }).error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >        self.emit('showAllSchemas', err)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('error', err)</span>
+      })
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.createTable = function(tableName, attributes, options) {
+    var attributeHashes   = {}
+      , dataTypeValues    = Utils._.values(DataTypes)
+      , keys              = Object.keys(attributes)
+      , keyLen            = keys.length
+      , self              = this
+      , sql               = ''
+      , i                 = 0
+&nbsp;
+    for (i = 0; i &lt; keyLen; i++) {
+      if (dataTypeValues.indexOf(attributes[keys[i]]) &gt; -1) {
+        attributeHashes[keys[i]] = { type: attributes[keys[i]], allowNull: true }
+      } else {
+        attributeHashes[keys[i]] = attributes[keys[i]]
+      }
+    }
+&nbsp;
+    options = Utils._.extend({
+      logging: this.sequelize.options.logging
+    }, options || <span class="branch-1 cbranch-no" title="branch not covered" >{})</span>
+&nbsp;
+    return new Utils.CustomEventEmitter(function(emitter) {
+      // Postgres requires a special SQL command for enums
+      <span class="missing-if-branch" title="if path not taken"" >I</span>if (self.sequelize.options.dialect === "postgres") {
+<span class="cstat-no" title="statement not covered" >        var chainer = new Utils.QueryChainer()</span>
+          // For backwards-compatibility, public schemas don't need to
+          // explicitly state their schema when creating a new enum type
+          , getTableName = (!options || !options.schema || options.schema === "public" ? '' : options.schema + '_') + tableName
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        for (i = 0; i &lt; keyLen; i++) {</span>
+<span class="cstat-no" title="statement not covered" >          if (attributes[keys[i]].toString().match(/^ENUM\(/)) {</span>
+<span class="cstat-no" title="statement not covered" >            sql = self.QueryGenerator.pgListEnums(getTableName, keys[i], options)</span>
+<span class="cstat-no" title="statement not covered" >            chainer.add(self.sequelize.query(sql, null, { plain: true, raw: true, type: 'SELECT', logging: options.logging }))</span>
+          }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        chainer.runSerially().success(<span class="fstat-no" title="function not covered" >function(results) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var chainer2 = new Utils.QueryChainer()</span>
+            // Find the table that we're trying to create throgh DAOFactoryManager
+            , daoTable = self.sequelize.daoFactoryManager.daos.filter(<span class="fstat-no" title="function not covered" >function(dao) {</span> <span class="cstat-no" title="statement not covered" >return dao.tableName === tableName }</span>)
+            , enumIdx  = 0
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          daoTable = daoTable.length &gt; 0 ? daoTable[0] : null</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          for (i = 0; i &lt; keyLen; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            if (attributes[keys[i]].toString().match(/^ENUM\(/)) {</span>
+              // If the enum type doesn't exist then create it
+<span class="cstat-no" title="statement not covered" >              if (!results[enumIdx]) {</span>
+<span class="cstat-no" title="statement not covered" >                sql = self.QueryGenerator.pgEnum(getTableName, keys[i], attributes[keys[i]], options)</span>
+<span class="cstat-no" title="statement not covered" >                chainer2.add(self.sequelize.query(sql, null, { raw: true, logging: options.logging }))</span>
+              } else <span class="cstat-no" title="statement not covered" >if (!!results[enumIdx] &amp;&amp; !!daoTable) {</span>
+<span class="cstat-no" title="statement not covered" >                var enumVals = self.QueryGenerator.fromArray(results[enumIdx].enum_value)</span>
+                  , vals = daoTable.rawAttributes[keys[i]].values
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                vals.forEach(<span class="fstat-no" title="function not covered" >function(value, idx) {</span></span>
+                  // reset out after/before options since it's for every enum value
+<span class="cstat-no" title="statement not covered" >                  options.before = null</span>
+<span class="cstat-no" title="statement not covered" >                  options.after = null</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                  if (enumVals.indexOf(value) === -1) {</span>
+<span class="cstat-no" title="statement not covered" >                    if (!!vals[idx+1]) {</span>
+<span class="cstat-no" title="statement not covered" >                      options.before = vals[idx+1]</span>
+                    }
+                    else <span class="cstat-no" title="statement not covered" >if (!!vals[idx-1]) {</span>
+<span class="cstat-no" title="statement not covered" >                      options.after = vals[idx-1]</span>
+                    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    chainer2.add(self.sequelize.query(self.QueryGenerator.pgEnumAdd(getTableName, keys[i], value, options)))</span>
+                  }
+                })
+              }
+            }
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          attributes = self.QueryGenerator.attributesToSQL(attributeHashes)</span>
+<span class="cstat-no" title="statement not covered" >          sql = self.QueryGenerator.createTableQuery(tableName, attributes, options)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          chainer2.run().success(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            queryAndEmit</span>
+              .call(self, sql, 'createTable', options)
+              .success(<span class="fstat-no" title="function not covered" >function(res) {</span>
+<span class="cstat-no" title="statement not covered" >                self.emit('createTable', null)</span>
+<span class="cstat-no" title="statement not covered" >                emitter.emit('success', res)</span>
+              })
+              .error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >                self.emit('createTable', err)</span>
+<span class="cstat-no" title="statement not covered" >                emitter.emit('error', err)</span>
+              })
+              .on('sql', <span class="fstat-no" title="function not covered" >function(sql)  {</span>
+<span class="cstat-no" title="statement not covered" >                emitter.emit('sql', sql)</span>
+              })
+          }).error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >            emitter.emit('error', err)</span>
+          }).on('sql', <span class="fstat-no" title="function not covered" >function(sql) {</span>
+<span class="cstat-no" title="statement not covered" >            emitter.emit('sql', sql)</span>
+          })
+        })
+      } else {
+        attributes = self.QueryGenerator.attributesToSQL(attributeHashes)
+        sql = self.QueryGenerator.createTableQuery(tableName, attributes, options)
+&nbsp;
+        queryAndEmit.call(self, sql, 'createTable', options).success(function(results) {
+          self.emit('createTable', null)
+          emitter.emit('success', results)
+        }).error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >          self.emit('createTable', err)</span>
+<span class="cstat-no" title="statement not covered" >          emitter.emit('error', err)</span>
+        }).on('sql', function(sql) {
+          emitter.emit('sql', sql)
+        })
+      }
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.dropTable = function(tableName, options) {
+    // if we're forcing we should be cascading unless explicitly stated otherwise
+    options = options || <span class="branch-1 cbranch-no" title="branch not covered" >{}</span>
+    options.cascade = options.cascade || options.force || <span class="branch-2 cbranch-no" title="branch not covered" >false</span>
+&nbsp;
+    var sql  = this.QueryGenerator.dropTableQuery(tableName, options)
+      , self = this
+&nbsp;
+    return new Utils.CustomEventEmitter(function(emitter) {
+      var chainer = new Utils.QueryChainer()
+&nbsp;
+      chainer.add(self, 'queryAndEmit', [sql, 'dropTable'], options)
+&nbsp;
+      // Since postgres has a special case for enums, we should drop the related
+      // enum type within the table and attribute
+      <span class="missing-if-branch" title="if path not taken"" >I</span>if (self.sequelize.options.dialect === "postgres") {
+        // Find the table that we're trying to drop
+<span class="cstat-no" title="statement not covered" >        daoTable = self.sequelize.daoFactoryManager.daos.filter(<span class="fstat-no" title="function not covered" >function(dao) {</span></span>
+<span class="cstat-no" title="statement not covered" >          return dao.tableName === tableName</span>
+        })
+&nbsp;
+        // Just in case if we're trying to drop a non-existing table
+<span class="cstat-no" title="statement not covered" >        daoTable = daoTable.length &gt; 0 ? daoTable[0] : null</span>
+<span class="cstat-no" title="statement not covered" >        if (!!daoTable) {</span>
+<span class="cstat-no" title="statement not covered" >          var getTableName = (!options || !options.schema || options.schema === "public" ? '' : options.schema + '_') + tableName</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          var keys = Object.keys(daoTable.rawAttributes)</span>
+            , keyLen = keys.length
+            , i = 0
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          for (i = 0; i &lt; keyLen; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            if (daoTable.rawAttributes[keys[i]].type &amp;&amp; daoTable.rawAttributes[keys[i]].type === "ENUM") {</span>
+<span class="cstat-no" title="statement not covered" >              chainer.add(self.sequelize, 'query', [self.QueryGenerator.pgEnumDrop(getTableName, keys[i]), null, {logging: options.logging, raw: true}])</span>
+            }
+          }
+        }
+      }
+&nbsp;
+      chainer.runSerially().success(function(results) {
+        emitter.emit('success', results[0])
+        self.emit('dropTable', null)
+      }).error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('error', err)</span>
+<span class="cstat-no" title="statement not covered" >        self.emit('dropTable', err)</span>
+      }).on('sql', <span class="fstat-no" title="function not covered" >function(sql) {</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('sql', sql)</span>
+      })
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.dropAllTables = function() {
+    var self = this
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (this.sequelize.options.dialect === 'sqlite') {
+      // sqlite needs some special treatment as it cannot drop a column
+<span class="cstat-no" title="statement not covered" >      return SQLiteQueryInterface.dropAllTables.call(this)</span>
+    } else {
+      return new Utils.CustomEventEmitter(function(dropAllTablesEmitter) {
+        var events  = []
+          , chainer = new Utils.QueryChainer()
+          , onError = <span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >              self.emit('dropAllTables', err)</span>
+<span class="cstat-no" title="statement not covered" >              dropAllTablesEmitter.emit('error', err)</span>
+            }
+&nbsp;
+        self.showAllTables().success(function(tableNames) {
+          self.getForeignKeysForTables(tableNames).success(function(foreignKeys) {
+&nbsp;
+            // add the foreign key removal query to the chainer
+            Object.keys(foreignKeys).forEach(function(tableName) {
+              foreignKeys[tableName].forEach(function(foreignKey) {
+                var sql = self.QueryGenerator.dropForeignKeyQuery(tableName, foreignKey)
+                chainer.add(self.sequelize, 'query', [ sql ])
+              })
+            })
+&nbsp;
+            // add the table removal query to the chainer
+            tableNames.forEach(function(tableName) {
+              chainer.add(self, 'dropTable', [ tableName, { cascade: true } ])
+            })
+&nbsp;
+            chainer
+              .runSerially()
+              .success(function() {
+                self.emit('dropAllTables', null)
+                dropAllTablesEmitter.emit('success', null)
+              })
+              .error(onError)
+          }).error(onError)
+        }).error(onError)
+      }).run()
+    }
+  }
+&nbsp;
+  QueryInterface.prototype.renameTable = <span class="fstat-no" title="function not covered" >function(before, after) {</span>
+<span class="cstat-no" title="statement not covered" >    var sql = this.QueryGenerator.renameTableQuery(before, after)</span>
+<span class="cstat-no" title="statement not covered" >    return queryAndEmit.call(this, sql, 'renameTable')</span>
+  }
+&nbsp;
+  QueryInterface.prototype.showAllTables = function() {
+    var self = this
+&nbsp;
+    return new Utils.CustomEventEmitter(function(emitter) {
+      var showTablesSql = self.QueryGenerator.showTablesQuery()
+&nbsp;
+      self.sequelize.query(showTablesSql, null, { raw: true }).success(function(tableNames) {
+        self.emit('showAllTables', null)
+        emitter.emit('success', Utils._.flatten(tableNames))
+      }).error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >        self.emit('showAllTables', err)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('error', err)</span>
+      })
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.describeTable = <span class="fstat-no" title="function not covered" >function(tableName, options) {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+      , schema = null
+      , schemaDelimiter = null
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (typeof options === "string") {</span>
+<span class="cstat-no" title="statement not covered" >      schema = options</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (typeof options === "object") {</span>
+<span class="cstat-no" title="statement not covered" >      schema = options.schema || null</span>
+<span class="cstat-no" title="statement not covered" >      schemaDelimiter = options.schemaDelimiter || null</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var sql;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (self.QueryGenerator.describeTableQuery) {</span>
+<span class="cstat-no" title="statement not covered" >        sql = self.QueryGenerator.describeTableQuery(tableName, schema, schemaDelimiter)</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        var table = self.QueryGenerator.quoteIdentifier(self.QueryGenerator.addSchema({tableName: tableName, options: {schema: schema, schemaDelimiter: schemaDelimiter}}), self.QueryGenerator.options.quoteIdentifiers)</span>
+<span class="cstat-no" title="statement not covered" >        sql = 'DESCRIBE ' + table + ';'</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      self.sequelize.query(sql, null, { raw: true }).success(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('success', data)</span>
+      }).error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('error', err)</span>
+      }).on('sql', <span class="fstat-no" title="function not covered" >function(sql) {</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('sql', sql)</span>
+      })
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.addColumn = <span class="fstat-no" title="function not covered" >function(tableName, attributeName, dataTypeOrOptions) {</span>
+<span class="cstat-no" title="statement not covered" >    var attributes = {}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (Utils._.values(DataTypes).indexOf(dataTypeOrOptions) &gt; -1) {</span>
+<span class="cstat-no" title="statement not covered" >      attributes[attributeName] = { type: dataTypeOrOptions, allowNull: true }</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      attributes[attributeName] = dataTypeOrOptions</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var options = this.QueryGenerator.attributesToSQL(attributes)</span>
+      , sql     = this.QueryGenerator.addColumnQuery(tableName, options)
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return queryAndEmit.call(this, sql, 'addColumn')</span>
+  }
+&nbsp;
+  QueryInterface.prototype.removeColumn = <span class="fstat-no" title="function not covered" >function(tableName, attributeName) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.sequelize.options.dialect === 'sqlite') {</span>
+      // sqlite needs some special treatment as it cannot drop a column
+<span class="cstat-no" title="statement not covered" >      return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >        SQLiteQueryInterface.removeColumn.call(this, tableName, attributeName, emitter, queryAndEmit)</span>
+      }.bind(this)).run()
+    } else {
+<span class="cstat-no" title="statement not covered" >      var sql = this.QueryGenerator.removeColumnQuery(tableName, attributeName)</span>
+<span class="cstat-no" title="statement not covered" >      return queryAndEmit.call(this, sql, 'removeColumn')</span>
+    }
+  }
+&nbsp;
+  QueryInterface.prototype.changeColumn = <span class="fstat-no" title="function not covered" >function(tableName, attributeName, dataTypeOrOptions) {</span>
+<span class="cstat-no" title="statement not covered" >    var attributes = {}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (Utils._.values(DataTypes).indexOf(dataTypeOrOptions) &gt; -1) {</span>
+<span class="cstat-no" title="statement not covered" >      attributes[attributeName] = { type: dataTypeOrOptions, allowNull: true }</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      attributes[attributeName] = dataTypeOrOptions</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.sequelize.options.dialect === 'sqlite') {</span>
+      // sqlite needs some special treatment as it cannot change a column
+<span class="cstat-no" title="statement not covered" >      return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >        SQLiteQueryInterface.changeColumn.call(this, tableName, attributes, emitter, queryAndEmit)</span>
+      }.bind(this)).run()
+    } else {
+<span class="cstat-no" title="statement not covered" >      var options = this.QueryGenerator.attributesToSQL(attributes)</span>
+        , sql     = this.QueryGenerator.changeColumnQuery(tableName, options)
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return queryAndEmit.call(this, sql, 'changeColumn')</span>
+    }
+  }
+&nbsp;
+  QueryInterface.prototype.renameColumn = <span class="fstat-no" title="function not covered" >function(tableName, attrNameBefore, attrNameAfter) {</span>
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      this.describeTable(tableName).success(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        data = data[attrNameBefore] || {}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var options =  {}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        options[attrNameAfter] = {</span>
+          attribute:    attrNameAfter,
+          type:         data.type,
+          allowNull:    data.allowNull,
+          defaultValue: data.defaultValue
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (this.sequelize.options.dialect === 'sqlite') {</span>
+          // sqlite needs some special treatment as it cannot rename a column
+<span class="cstat-no" title="statement not covered" >          SQLiteQueryInterface.renameColumn.call(this, tableName, attrNameBefore, attrNameAfter, emitter, queryAndEmit)</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          var sql = this.QueryGenerator.renameColumnQuery(tableName,</span>
+            attrNameBefore,
+            this.QueryGenerator.attributesToSQL(options)
+          )
+<span class="cstat-no" title="statement not covered" >          queryAndEmit.call(this, sql, 'renameColumn', {}, emitter)</span>
+        }
+      }.bind(this))
+      .error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >        this.emit('renameColumn', err)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('error', err)</span>
+      }.bind(this))
+    }.bind(this)).run()
+  }
+&nbsp;
+  QueryInterface.prototype.addIndex = <span class="fstat-no" title="function not covered" >function(tableName, attributes, options) {</span>
+<span class="cstat-no" title="statement not covered" >    var sql = this.QueryGenerator.addIndexQuery(tableName, attributes, options)</span>
+<span class="cstat-no" title="statement not covered" >    return queryAndEmit.call(this, sql, 'addIndex')</span>
+  }
+&nbsp;
+  QueryInterface.prototype.showIndex = <span class="fstat-no" title="function not covered" >function(tableName, options) {</span>
+<span class="cstat-no" title="statement not covered" >    var sql = this.QueryGenerator.showIndexQuery(tableName, options)</span>
+<span class="cstat-no" title="statement not covered" >    return queryAndEmit.call(this, sql, 'showIndex')</span>
+  }
+&nbsp;
+  QueryInterface.prototype.getForeignKeysForTables = function(tableNames) {
+    var self = this
+&nbsp;
+    return new Utils.CustomEventEmitter(function(emitter) {
+      if (tableNames.length === 0) {
+        emitter.emit('success', {})
+      } else {
+        var chainer = new Utils.QueryChainer()
+&nbsp;
+        tableNames.forEach(function(tableName) {
+          var sql = self.QueryGenerator.getForeignKeysQuery(tableName, self.sequelize.config.database)
+          chainer.add(self.sequelize, 'query', [sql])
+        })
+&nbsp;
+        chainer.runSerially().proxy(emitter, {
+          skipEvents: ['success']
+        }).success(function(results) {
+          var result = {}
+&nbsp;
+          tableNames.forEach(function(tableName, i) {
+            result[tableName] = Utils._.compact(results[i]).map(function(r) { return r.constraint_name })
+          })
+&nbsp;
+          emitter.emit('success', result)
+        })
+      }
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.removeIndex = <span class="fstat-no" title="function not covered" >function(tableName, indexNameOrAttributes) {</span>
+<span class="cstat-no" title="statement not covered" >    var sql = this.QueryGenerator.removeIndexQuery(tableName, indexNameOrAttributes)</span>
+<span class="cstat-no" title="statement not covered" >    return queryAndEmit.call(this, sql, "removeIndex")</span>
+  }
+&nbsp;
+  QueryInterface.prototype.insert = function(dao, tableName, values, options) {
+    var sql = this.QueryGenerator.insertQuery(tableName, values, dao.daoFactory.rawAttributes)
+    return queryAndEmit.call(this, [sql, dao, options], 'insert', {
+      success: function(obj) { obj.isNewRecord = false }
+    })
+  }
+&nbsp;
+  QueryInterface.prototype.bulkInsert = function(tableName, records, options) {
+    var sql = this.QueryGenerator.bulkInsertQuery(tableName, records)
+    return queryAndEmit.call(this, [sql, null, options], 'bulkInsert')
+  }
+&nbsp;
+  QueryInterface.prototype.update = function(dao, tableName, values, identifier, options) {
+    var self = this
+      , restrict = false
+      , sql = self.QueryGenerator.updateQuery(tableName, values, identifier, options, dao.daoFactory.rawAttributes)
+&nbsp;
+    // Check for a restrict field
+    <span class="missing-if-branch" title="else path not taken"" >E</span>if (!!dao.daoFactory &amp;&amp; !!dao.daoFactory.associations) {
+      var keys = Object.keys(dao.daoFactory.associations)
+        , length = keys.length
+&nbsp;
+      for (var i = 0; i &lt; length; i++) {
+        if (dao.daoFactory.associations[keys[i]].options &amp;&amp; dao.daoFactory.associations[keys[i]].options.onUpdate &amp;&amp; dao.daoFactory.associations[keys[i]].options.onUpdate === "restrict") {
+          restrict = true
+        }
+      }
+    }
+&nbsp;
+    return new Utils.CustomEventEmitter(function(emitter) {
+      var chainer = new Utils.QueryChainer()
+&nbsp;
+      chainer.add(self, 'queryAndEmit', [[sql, dao, options], 'delete'])
+&nbsp;
+      chainer.runSerially()
+      .success(function(results){
+        emitter.query = { sql: sql }
+        emitter.emit('success', results[0])
+        emitter.emit('sql', sql)
+      })
+      .error(function(err) {
+        emitter.query = { sql: sql }
+        emitter.emit('error', err)
+        emitter.emit('sql', sql)
+      })
+      .on('sql', <span class="fstat-no" title="function not covered" >function(sql) {</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('sql', sql)</span>
+      })
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.bulkUpdate = function(tableName, values, identifier, options) {
+    var self = this
+      , sql = self.QueryGenerator.updateQuery(tableName, values, identifier, options)
+&nbsp;
+    return new Utils.CustomEventEmitter(function(emitter) {
+      var chainer = new Utils.QueryChainer()
+&nbsp;
+      chainer.add(self, 'queryAndEmit', [[sql, null, options], 'bulkUpdate'])
+&nbsp;
+      return chainer.runSerially()
+      .success(function(results){
+        emitter.query = { sql: sql }
+        emitter.emit('sql', sql)
+        emitter.emit('success', results[1])
+      })
+      .error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >        emitter.query = { sql: sql }</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('sql', sql)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('error', err)</span>
+      })
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.delete = function(dao, tableName, identifier, options) {
+    var self      = this
+      , restrict  = false
+      , cascades  = []
+      , sql       = self.QueryGenerator.deleteQuery(tableName, identifier, null, dao.daoFactory)
+&nbsp;
+    // Check for a restrict field
+    <span class="missing-if-branch" title="else path not taken"" >E</span>if (!!dao.daoFactory &amp;&amp; !!dao.daoFactory.associations) {
+      var keys = Object.keys(dao.daoFactory.associations)
+        , length = keys.length
+&nbsp;
+      for (var i = 0; i &lt; length; i++) {
+        if (dao.daoFactory.associations[keys[i]].options &amp;&amp; dao.daoFactory.associations[keys[i]].options.onDelete) {
+          if (dao.daoFactory.associations[keys[i]].options.onDelete === "restrict") {
+            restrict = true
+          }
+          else <span class="missing-if-branch" title="if path not taken"" >I</span>if (dao.daoFactory.associations[keys[i]].options.onDelete === "cascade" &amp;&amp; dao.daoFactory.associations[keys[i]].options.useHooks === true) {
+<span class="cstat-no" title="statement not covered" >            cascades[cascades.length] = dao.daoFactory.associations[keys[i]].accessors.get</span>
+          }
+        }
+      }
+    }
+&nbsp;
+    return new Utils.CustomEventEmitter(function(emitter) {
+      var tick = 0
+      var iterate = <span class="fstat-no" title="function not covered" >function(err, i) {</span>
+<span class="cstat-no" title="statement not covered" >        if (!!err || i &gt;= cascades.length) {</span>
+<span class="cstat-no" title="statement not covered" >          return run(err)</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        dao[cascades[i]]().success(<span class="fstat-no" title="function not covered" >function(tasks) {</span></span>
+<span class="cstat-no" title="statement not covered" >          if (tasks === null || tasks.length &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >            return run()</span>
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          tasks = Array.isArray(tasks) ? tasks : [tasks]</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          var ii = 0</span>
+<span class="cstat-no" title="statement not covered" >          var next = <span class="fstat-no" title="function not covered" >function(err, ii) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (!!err || ii &gt;= tasks.length) {</span>
+<span class="cstat-no" title="statement not covered" >              return iterate(err)</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            tasks[ii].destroy().error(<span class="fstat-no" title="function not covered" >function(err) {</span></span>
+<span class="cstat-no" title="statement not covered" >              return iterate(err)</span>
+            })
+            .success(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >              ii++</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >              if (ii &gt;= tasks.length) {</span>
+<span class="cstat-no" title="statement not covered" >                tick++</span>
+<span class="cstat-no" title="statement not covered" >                return iterate(null, tick)</span>
+              }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >              next(null, ii)</span>
+            })
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          next(null, ii)</span>
+        })
+      }
+&nbsp;
+      var run = function(err) {
+        <span class="missing-if-branch" title="if path not taken"" >I</span>if (!!err) {
+<span class="cstat-no" title="statement not covered" >          return emitter.emit('error', err)</span>
+        }
+&nbsp;
+        var chainer = new Utils.QueryChainer()
+&nbsp;
+        chainer.add(self, 'queryAndEmit', [[sql, dao, options], 'delete'])
+&nbsp;
+        chainer.runSerially()
+        .success(function(results){
+          emitter.query = { sql: sql }
+          emitter.emit('sql', sql)
+          emitter.emit('success', results[1])
+        })
+        .error(function(err) {
+          emitter.query = { sql: sql }
+          emitter.emit('sql', sql)
+          emitter.emit('error', err)
+        })
+      }
+&nbsp;
+      <span class="missing-if-branch" title="if path not taken"" >I</span>if (cascades.length &gt; 0) {
+<span class="cstat-no" title="statement not covered" >        iterate(null, tick)</span>
+      } else {
+        run()
+      }
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.bulkDelete = function(tableName, identifier, options) {
+    var self = this
+    var sql = self.QueryGenerator.deleteQuery(tableName, identifier, Utils._.defaults(options || <span class="branch-1 cbranch-no" title="branch not covered" >{},</span> {limit: null}))
+&nbsp;
+    return new Utils.CustomEventEmitter(function(emitter) {
+      var chainer = new Utils.QueryChainer()
+&nbsp;
+      chainer.add(self, 'queryAndEmit', [[sql, null, options], 'bulkDelete', options])
+&nbsp;
+      chainer.runSerially()
+      .success(function(results){
+        emitter.query = { sql: sql }
+        emitter.emit('sql', sql)
+        emitter.emit('success', results[1])
+      })
+      .error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >        emitter.query = { sql: sql }</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('sql', sql)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('error', err)</span>
+      })
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.select = function(factory, tableName, options, queryOptions) {
+    options = options || {}
+&nbsp;
+    // See if we need to merge options and factory.scopeObj
+    // we're doing this on the QueryInterface level because it's a bridge between
+    // sequelize and the databases
+    if (Object.keys(factory.scopeObj).length &gt; 0) {
+      <span class="missing-if-branch" title="else path not taken"" >E</span>if (!!options) {
+        Utils.injectScope.call(factory, options, true)
+      }
+&nbsp;
+      var scopeObj = buildScope.call(factory)
+      Object.keys(scopeObj).forEach(function(method) {
+        if (typeof scopeObj[method] === "number" || !Utils._.isEmpty(scopeObj[method])) {
+          options[method] = scopeObj[method]
+        }
+      })
+    }
+&nbsp;
+    var sql = this.QueryGenerator.selectQuery(tableName, options, factory)
+    queryOptions = Utils._.extend({}, queryOptions, { include: options.include, includeNames: options.includeNames, includeMap: options.includeMap })
+&nbsp;
+    return queryAndEmit.call(this, [sql, factory, queryOptions], 'select')
+  }
+&nbsp;
+  QueryInterface.prototype.increment = <span class="fstat-no" title="function not covered" >function(dao, tableName, values, identifier, options) {</span>
+<span class="cstat-no" title="statement not covered" >    var sql = this.QueryGenerator.incrementQuery(tableName, values, identifier, options.attributes)</span>
+<span class="cstat-no" title="statement not covered" >    return queryAndEmit.call(this, [sql, dao, options], 'increment')</span>
+  }
+&nbsp;
+  QueryInterface.prototype.rawSelect = <span class="fstat-no" title="function not covered" >function(tableName, options, attributeSelector) {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (attributeSelector === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error('Please pass an attribute selector!')</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var sql          = self.QueryGenerator.selectQuery(tableName, options)</span>
+        , queryOptions = Utils._.extend({ transaction: options.transaction }, { plain: true, raw: true, type: 'SELECT' })
+        , query        = self.sequelize.query(sql, null, queryOptions)
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      query</span>
+        .success(<span class="fstat-no" title="function not covered" >function(data) {</span>
+<span class="cstat-no" title="statement not covered" >          var result = data ? data[attributeSelector] : null</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (options &amp;&amp; options.dataType) {</span>
+<span class="cstat-no" title="statement not covered" >            var dataType = options.dataType;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (dataType instanceof DataTypes.DECIMAL || dataType instanceof DataTypes.FLOAT) {</span>
+<span class="cstat-no" title="statement not covered" >              result = parseFloat(result);</span>
+            } else <span class="cstat-no" title="statement not covered" >if (dataType === DataTypes.INTEGER || dataType instanceof DataTypes.BIGINT) {</span>
+<span class="cstat-no" title="statement not covered" >              result = parseInt(result, 10);</span>
+            } else <span class="cstat-no" title="statement not covered" >if (dataType === DataTypes.DATE) {</span>
+<span class="cstat-no" title="statement not covered" >              result = new Date(result + 'Z');</span>
+            } else <span class="cstat-no" title="statement not covered" >if (dataType === DataTypes.STRING) {</span>
+              // Nothing to do, result is already a string.
+            }
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          self.emit('rawSelect', null)</span>
+<span class="cstat-no" title="statement not covered" >          emitter.emit('success', result)</span>
+        })
+        .error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >          self.emit('rawSelect', err)</span>
+<span class="cstat-no" title="statement not covered" >          emitter.emit('error', err)</span>
+        })
+        .on('sql', <span class="fstat-no" title="function not covered" >function(sql) {</span>
+<span class="cstat-no" title="statement not covered" >          emitter.emit('sql', sql)</span>
+        })
+    }).run()
+  }
+&nbsp;
+  QueryInterface.prototype.createTrigger = <span class="fstat-no" title="function not covered" >function(tableName, triggerName, timingType, fireOnArray,</span>
+      functionName, functionParams, optionsArray) {
+<span class="cstat-no" title="statement not covered" >    var  sql = this.QueryGenerator.createTrigger(tableName, triggerName, timingType, fireOnArray, functionName</span>
+        , functionParams, optionsArray)
+<span class="cstat-no" title="statement not covered" >    if (sql){</span>
+<span class="cstat-no" title="statement not covered" >      return queryAndEmit.call(this, sql, 'createTrigger')</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >        this.emit('createTrigger', null)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('success')</span>
+      }).run()
+    }
+  }
+&nbsp;
+  QueryInterface.prototype.dropTrigger = <span class="fstat-no" title="function not covered" >function(tableName, triggerName) {</span>
+<span class="cstat-no" title="statement not covered" >    var  sql = this.QueryGenerator.dropTrigger(tableName, triggerName)</span>
+<span class="cstat-no" title="statement not covered" >    if (sql){</span>
+<span class="cstat-no" title="statement not covered" >      return queryAndEmit.call(this, sql, 'dropTrigger')</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >        this.emit('dropTrigger', null)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('success')</span>
+      }).run()
+    }
+  }
+&nbsp;
+  QueryInterface.prototype.renameTrigger = <span class="fstat-no" title="function not covered" >function(tableName, oldTriggerName, newTriggerName) {</span>
+<span class="cstat-no" title="statement not covered" >    var  sql = this.QueryGenerator.renameTrigger(tableName, oldTriggerName, newTriggerName)</span>
+<span class="cstat-no" title="statement not covered" >    if (sql){</span>
+<span class="cstat-no" title="statement not covered" >      return queryAndEmit.call(this, sql, 'renameTrigger')</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >        this.emit('renameTrigger', null)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('success')</span>
+      }).run()
+    }
+  }
+&nbsp;
+  QueryInterface.prototype.createFunction = <span class="fstat-no" title="function not covered" >function(functionName, params, returnType, language, body, options) {</span>
+<span class="cstat-no" title="statement not covered" >    var  sql = this.QueryGenerator.createFunction(functionName, params, returnType, language, body, options)</span>
+<span class="cstat-no" title="statement not covered" >    if (sql){</span>
+<span class="cstat-no" title="statement not covered" >      return queryAndEmit.call(this, sql, 'createFunction')</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >        this.emit('createFunction', null)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('success')</span>
+      }).run()
+    }
+  }
+&nbsp;
+  QueryInterface.prototype.dropFunction = <span class="fstat-no" title="function not covered" >function(functionName, params) {</span>
+<span class="cstat-no" title="statement not covered" >    var  sql = this.QueryGenerator.dropFunction(functionName, params)</span>
+<span class="cstat-no" title="statement not covered" >    if (sql){</span>
+<span class="cstat-no" title="statement not covered" >      return queryAndEmit.call(this, sql, 'dropFunction')</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >        this.emit('dropFunction', null)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('success')</span>
+      }).run()
+    }
+  }
+&nbsp;
+  QueryInterface.prototype.renameFunction = <span class="fstat-no" title="function not covered" >function(oldFunctionName, params, newFunctionName) {</span>
+<span class="cstat-no" title="statement not covered" >    var  sql = this.QueryGenerator.renameFunction(oldFunctionName, params, newFunctionName)</span>
+<span class="cstat-no" title="statement not covered" >    if (sql){</span>
+<span class="cstat-no" title="statement not covered" >      return queryAndEmit.call(this, sql, 'renameFunction')</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >        this.emit('renameFunction', null)</span>
+<span class="cstat-no" title="statement not covered" >        emitter.emit('success')</span>
+      }).run()
+    }
+  }
+&nbsp;
+  // Helper methods useful for querying
+&nbsp;
+  /**
+   * Escape an identifier (e.g. a table or attribute name). If force is true,
+   * the identifier will be quoted even if the `quoteIdentifiers` option is
+   * false.
+   */
+  QueryInterface.prototype.quoteIdentifier = function(identifier, force) {
+    return this.QueryGenerator.quoteIdentifier(identifier, force)
+  }
+&nbsp;
+  /**
+   * Split an identifier into .-separated tokens and quote each part.
+   * If force is true, the identifier will be quoted even if the
+   * `quoteIdentifiers` option is false.
+   */
+  QueryInterface.prototype.quoteIdentifiers = function(identifiers, force) {
+    return this.QueryGenerator.quoteIdentifiers(identifiers, force)
+  }
+&nbsp;
+  /**
+   * Escape a value (e.g. a string, number or date)
+   */
+  QueryInterface.prototype.escape = <span class="fstat-no" title="function not covered" >function(value) {</span>
+<span class="cstat-no" title="statement not covered" >    return this.QueryGenerator.escape(value)</span>
+  }
+&nbsp;
+  QueryInterface.prototype.setAutocommit = function(transaction, value) {
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (!transaction || !(transaction instanceof Transaction)) {
+<span class="cstat-no" title="statement not covered" >      throw new Error('Unable to set autocommit for a transaction without transaction object!')</span>
+    }
+&nbsp;
+    var sql = this.QueryGenerator.setAutocommitQuery(value)
+    return this.queryAndEmit([sql, null, { transaction: transaction }], 'setAutocommit')
+  }
+&nbsp;
+  QueryInterface.prototype.setIsolationLevel = function(transaction, value) {
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (!transaction || !(transaction instanceof Transaction)) {
+<span class="cstat-no" title="statement not covered" >      throw new Error('Unable to set isolation level for a transaction without transaction object!')</span>
+    }
+&nbsp;
+    var sql = this.QueryGenerator.setIsolationLevelQuery(value)
+    return this.queryAndEmit([sql, null, { transaction: transaction }], 'setIsolationLevel')
+  }
+&nbsp;
+  QueryInterface.prototype.startTransaction = function(transaction, options) {
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (!transaction || !(transaction instanceof Transaction)) {
+<span class="cstat-no" title="statement not covered" >      throw new Error('Unable to start a transaction without transaction object!')</span>
+    }
+&nbsp;
+    options = Utils._.extend({
+      transaction: transaction
+    }, options || <span class="branch-1 cbranch-no" title="branch not covered" >{})</span>
+&nbsp;
+    var sql = this.QueryGenerator.startTransactionQuery(options)
+    return this.queryAndEmit([sql, null, options], 'startTransaction')
+  }
+&nbsp;
+  QueryInterface.prototype.commitTransaction = <span class="fstat-no" title="function not covered" >function(transaction, options) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!transaction || !(transaction instanceof Transaction)) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error('Unable to commit a transaction without transaction object!')</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    options = Utils._.extend({</span>
+      transaction: transaction
+    }, options || {})
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var sql = this.QueryGenerator.commitTransactionQuery(options)</span>
+<span class="cstat-no" title="statement not covered" >    return this.queryAndEmit([sql, null, options], 'commitTransaction')</span>
+  }
+&nbsp;
+  QueryInterface.prototype.rollbackTransaction = function(transaction, options) {
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (!transaction || !(transaction instanceof Transaction)) {
+<span class="cstat-no" title="statement not covered" >      throw new Error('Unable to rollback a transaction without transaction object!')</span>
+    }
+&nbsp;
+    options = Utils._.extend({
+      transaction: transaction
+    }, options || <span class="branch-1 cbranch-no" title="branch not covered" >{})</span>
+&nbsp;
+    var sql = this.QueryGenerator.rollbackTransactionQuery(options)
+    return this.queryAndEmit([sql, null, options], 'rollbackTransaction')
+  }
+&nbsp;
+  // private
+&nbsp;
+  var buildScope = function() {
+    var smart
+&nbsp;
+    // Use smartWhere to convert several {where} objects into a single where object
+    smart = Utils.smartWhere(this.scopeObj.where || [], this.daoFactoryManager.sequelize.options.dialect)
+    smart = Utils.compileSmartWhere.call(this, smart, this.daoFactoryManager.sequelize.options.dialect)
+    return {limit: this.scopeObj.limit || null, offset: this.scopeObj.offset || null, where: smart, order: (this.scopeObj.order || []).join(', ')}
+  }
+&nbsp;
+  var queryAndEmit = QueryInterface.prototype.queryAndEmit = function(sqlOrQueryParams, methodName, options, emitter) {
+    options = Utils._.extend({
+      success:     function(){},
+      error:       function(){},
+      transaction: null,
+      logging:     this.sequelize.options.logging
+    }, options || {})
+&nbsp;
+    var execQuery = function(emitter) {
+      var query = null
+&nbsp;
+      if (Array.isArray(sqlOrQueryParams)) {
+        <span class="missing-if-branch" title="if path not taken"" >I</span>if (sqlOrQueryParams.length === 1) {
+<span class="cstat-no" title="statement not covered" >          sqlOrQueryParams.push(null)</span>
+        }
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken"" >I</span>if (sqlOrQueryParams.length === 2) {
+<span class="cstat-no" title="statement not covered" >          sqlOrQueryParams.push(typeof options === "object" ? options : {})</span>
+        }
+&nbsp;
+        emitter.query = this.sequelize.query.apply(this.sequelize, sqlOrQueryParams)
+      } else {
+        emitter.query = this.sequelize.query(sqlOrQueryParams, null, options)
+      }
+&nbsp;
+      emitter
+        .query
+        .success(function(obj) {
+          options.success &amp;&amp; options.success(obj)
+          this.emit(methodName, null)
+          emitter.emit('success', obj)
+        }.bind(this))
+        .error(function(err) {
+          options.error &amp;&amp; options.error(err)
+          this.emit(methodName, err)
+          emitter.emit('error', err)
+        }.bind(this))
+        .on('sql', function(sql) {
+          emitter.emit('sql', sql)
+        })
+    }.bind(this)
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (!!emitter) {
+<span class="cstat-no" title="statement not covered" >      execQuery(emitter)</span>
+    } else {
+      return new Utils.CustomEventEmitter(execQuery).run()
+    }
+  }
+&nbsp;
+  return QueryInterface
+})()
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jan 07 2014 19:27:42 GMT+0100 (CET)</div>
+</div>
+
+<script src="../../prettify.js"></script>
+
+<script src="http://yui.yahooapis.com/3.6.0/build/yui/yui-min.js"></script>
+<script>
+
+    YUI().use('datatable', function (Y) {
+
+        var formatters = {
+          pct: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              try {
+                  return o.value.toFixed(2) + '%';
+              } catch (ex) { return o.value + '%'; }
+          },
+          html: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.record.get(o.column.key + '_html');
+          }
+        },
+          defaultFormatter = function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.value;
+          };
+
+        function getColumns(theadNode) {
+            var colNodes = theadNode.all('tr th'),
+                cols = [],
+                col;
+            colNodes.each(function (colNode) {
+                col = {
+                    key: colNode.getAttribute('data-col'),
+                    label: colNode.get('innerHTML') || ' ',
+                    sortable: !colNode.getAttribute('data-nosort'),
+                    className: colNode.getAttribute('class'),
+                    type: colNode.getAttribute('data-type'),
+                    allowHTML: colNode.getAttribute('data-html') === 'true' || colNode.getAttribute('data-fmt') === 'html'
+                };
+                col.formatter = formatters[colNode.getAttribute('data-fmt')] || defaultFormatter;
+                cols.push(col);
+            });
+            return cols;
+        }
+
+        function getRowData(trNode, cols) {
+            var tdNodes = trNode.all('td'),
+                    i,
+                    row = { classes: {} },
+                    node,
+                    name;
+            for (i = 0; i < cols.length; i += 1) {
+                name = cols[i].key;
+                node = tdNodes.item(i);
+                row[name] = node.getAttribute('data-value') || node.get('innerHTML');
+                row[name + '_html'] = node.get('innerHTML');
+                row.classes[name] = node.getAttribute('class');
+                //Y.log('Name: ' + name + '; Value: ' + row[name]);
+                if (cols[i].type === 'number') { row[name] = row[name] * 1; }
+            }
+            //Y.log(row);
+            return row;
+        }
+
+        function getData(tbodyNode, cols) {
+            var data = [];
+            tbodyNode.all('tr').each(function (trNode) {
+                data.push(getRowData(trNode, cols));
+            });
+            return data;
+        }
+
+        function replaceTable(node) {
+            if (!node) { return; }
+            var cols = getColumns(node.one('thead')),
+                data = getData(node.one('tbody'), cols),
+                table,
+                parent = node.get('parentNode');
+
+            table = new Y.DataTable({
+                columns: cols,
+                data: data,
+                sortBy: 'file'
+            });
+            parent.set('innerHTML', '');
+            table.render(parent);
+        }
+
+        Y.on('domready', function () {
+            replaceTable(Y.one('div.coverage-summary table'));
+            if (typeof prettyPrint === 'function') {
+                prettyPrint();
+            }
+        });
+    });
+</script>
+</body>
+</html>

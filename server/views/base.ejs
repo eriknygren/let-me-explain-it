@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%=apiKey%>&v=3.exp&sensor=false"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://static.vline.com/vline.js" type="text/javascript"></script>
+    <script src="/js/lib/jquery/jquery-2.0.3.min.js"></script>
+    <script src="/js/lib/jquery-cookie/jquery.cookie.js"></script>
+
+    <% if(appDebug){ %>
+        <script src="/js/lib/angular-file-upload/angular-file-upload-html5-shim.min.js"></script>
+        <script src="/js/lib/angularjs/angular.min.js"></script>
+        <script src="/js/lib/angular-file-upload/angular-file-upload.min.js"></script>
+        <link  rel="stylesheet" href="/js/lib/bootstrap/css/bootstrap.css">
+        <script src="/js/lib/bootstrap/js/bootstrap.js"></script>
+        <script src="/js/lib/angular-ui-bootstrap/ui-bootstrap-tpls-0.4.0.js"></script>
+        <link  rel="stylesheet" href="/js/lib/colorpicker/colorpicker.css">
+        <script src="/js/lib/colorpicker/bootstrap-colorpicker.js"></script>
+        <script src="/js/lib/colorpicker/bootstrap-colorpicker-module.js"></script>
+        <script src="/js/app.js"></script>
+        <script src="/js/services/AngularBroadcastService.js"></script>
+        <script src="/js/services/SafeApplyService.js"></script>
+        <script src="/js/services/SocketIOService.js"></script>
+        <script src="/js/services/WebRTCService.js"></script>
+        <script src="/js/services/ClientStatusService.js"></script>
+        <script src="/js/services/CookieService.js"></script>
+        <script src="/js/controllers/HeaderBarController.js"></script>
+        <script src="/js/controllers/MainRoomController.js"></script>
+        <script src="/js/controllers/ResizeWorkAreaDialogController.js"></script>
+        <script src="/js/controllers/ChatController.js"></script>
+        <script src="/js/controllers/ToolbarController.js"></script>
+        <script src="/js/controllers/TabController.js"></script>
+        <script src="/js/controllers/RemoteUsersController.js"></script>
+        <script src="/js/controllers/LocalUserController.js"></script>
+        <script src="/js/controllers/LoginController.js"></script>
+        <script src="/js/controllers/UserSettingsController.js"></script>
+        <script src="/js/controllers/ForgotPasswordController.js"></script>
+        <script src="/js/controllers/PromptModalController.js"></script>
+        <script src="/js/controllers/YesNoModalController.js"></script>
+        <script src="/js/controllers/InfoModalController.js"></script>
+        <script src="/js/directives/LoginDirective.js"></script>
+        <script src="/js/directives/DrawDirective.js"></script>
+        <script src="/js/directives/ChatMessagesDirective.js"></script>
+        <script src="/js/directives/NumericInputOnlyDirective.js"></script>
+        <script src="/js/directives/MapDirective.js"></script>
+        <script src="/js/directives/ColorPickerIconDirective.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <% } else{ %>
+        <script src="/js/lib/angular-file-upload/angular-file-upload-html5-shim.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+        <script src="/js/lib/angular-file-upload/angular-file-upload.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script src="/js/lib/angular-ui-bootstrap/ui-bootstrap-tpls-0.4.0.js"></script>
+        <link  rel="stylesheet" href="/js/lib/colorpicker/colorpicker.css">
+        <script src="/js/lib/colorpicker/bootstrap-colorpicker.js"></script>
+        <script src="/js/lib/colorpicker/bootstrap-colorpicker-module.js"></script>
+        <script src="/dist/letmeexplainit-min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/dist/letmeexplainit-min.css" />
+    <% }%>
+
+
+    <title>Let me explain it</title>
+</head>
+<body ng-app="angularApp">
+<div id="header-bar" ng-controller="HeaderBarController">
+    <div class="pull-left"><a href="/" class="no-underline no-text-selection header-title">LetMeExplainIt <i class="icon-logo"></i></a></div>
+    <div class="header-page-title ellipsis no-text-selection standard-cursor">{{ title }}</div>
+</div>
+
+<div ng-view></div>
+
+<div id="footer-bar" class="no-text-selection">
+        <a class="github-referral header-footer-text" href="https://github.com/eriknygren" target="_blank">
+            <img class="github-logo-small pull-left" src="/images/GitHub-Mark-Light-32px.png"/>
+            <span class="separator muted pull-left"> · </span>
+            <span class="pull-left">View on Github</span>
+        </a>
+    <div class="copyright-text header-footer-text">&copy; Erik Nygren</div>
+</div>
+</body>
+</html>

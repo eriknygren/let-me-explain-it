@@ -1,0 +1,1532 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for upstream/lib/dialects/sqlite/query-generator.js</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="../../../../prettify.css">
+
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Helvetica Neue, Helvetica,Arial;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 10em;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Consolas, Menlo, Monaco, monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 14px;
+            font-size: 14px;
+            -moz-tab-size: 2;
+            -o-tab-size:  2;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+            xtext-decoration: line-through;
+        }
+        .missing-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { text-decoration: none; color: #000; }
+        div.coverage-summary a:visited { text-decoration: none; color: #333; }
+        div.coverage-summary a:hover { text-decoration: underline; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: url("http://yui.yahooapis.com/3.6.0/build/datatable-sort/assets/skins/sam/sort-arrow-sprite.png") no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">upstream/lib/dialects/sqlite/query-generator.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">3.77% <small>(6 / 159)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">0% <small>(0 / 118)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">2.56% <small>(1 / 39)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">3.85% <small>(6 / 156)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+    </h2>
+    <div class="path"><a href="../../../../index.html">All files</a> &#187; <a href="index.html">upstream/lib/dialects/sqlite/</a> &#187; query-generator.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var Utils       = require("../../utils")
+  , DataTypes   = require("../../data-types")
+  , SqlString   = require("../../sql-string")
+  , Transaction = require("../../transaction")
+&nbsp;
+var MySqlQueryGenerator = Utils._.extend(
+  Utils._.clone(require("../abstract/query-generator")),
+  Utils._.clone(require("../mysql/query-generator"))
+)
+&nbsp;
+var hashToWhereConditions = MySqlQueryGenerator.hashToWhereConditions
+&nbsp;
+module.exports = (function() {
+  var QueryGenerator = {
+    options: {},
+    dialect: 'sqlite',
+&nbsp;
+    addSchema: <span class="fstat-no" title="function not covered" >function(opts) {</span>
+<span class="cstat-no" title="statement not covered" >      var tableName       = undefined</span>
+<span class="cstat-no" title="statement not covered" >      var schema          = (!!opts &amp;&amp; !!opts.options &amp;&amp; !!opts.options.schema ? opts.options.schema : undefined)</span>
+<span class="cstat-no" title="statement not covered" >      var schemaDelimiter = (!!opts &amp;&amp; !!opts.options &amp;&amp; !!opts.options.schemaDelimiter ? opts.options.schemaDelimiter : undefined)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (!!opts &amp;&amp; !!opts.tableName) {</span>
+<span class="cstat-no" title="statement not covered" >        tableName = opts.tableName</span>
+      }
+      else <span class="cstat-no" title="statement not covered" >if (typeof opts === "string") {</span>
+<span class="cstat-no" title="statement not covered" >        tableName = opts</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (!schema || schema.toString().trim() === "") {</span>
+<span class="cstat-no" title="statement not covered" >        return tableName</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return this.quoteIdentifier(schema) + (!schemaDelimiter ? '.' : schemaDelimiter) + this.quoteIdentifier(tableName)</span>
+    },
+&nbsp;
+    createSchema: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var query = "SELECT name FROM sqlite_master WHERE type='table' and name!='sqlite_sequence';"</span>
+<span class="cstat-no" title="statement not covered" >      return Utils._.template(query)({})</span>
+    },
+&nbsp;
+    dropSchema: <span class="fstat-no" title="function not covered" >function(tableName, options) {</span>
+<span class="cstat-no" title="statement not covered" >      return this.dropTableQuery(tableName, options)</span>
+    },
+&nbsp;
+    showSchemasQuery: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      return "SELECT name FROM sqlite_master WHERE type='table' and name!='sqlite_sequence';"</span>
+    },
+&nbsp;
+    createTableQuery: <span class="fstat-no" title="function not covered" >function(tableName, attributes, options) {</span>
+<span class="cstat-no" title="statement not covered" >      options = options || {}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var query       = "CREATE TABLE IF NOT EXISTS &lt;%= table %&gt; (&lt;%= attributes%&gt;)"</span>
+        , primaryKeys = []
+        , needsMultiplePrimaryKeys = (Utils._.values(attributes).filter(<span class="fstat-no" title="function not covered" >function(definition) {</span>
+<span class="cstat-no" title="statement not covered" >                    return Utils._.includes(definition, 'PRIMARY KEY')</span>
+                  }).length &gt; 1)
+        , attrStr     = []
+        , modifierLastIndex = -1
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      for (var attr in attributes) {</span>
+<span class="cstat-no" title="statement not covered" >        if (attributes.hasOwnProperty(attr)) {</span>
+<span class="cstat-no" title="statement not covered" >          var dataType = attributes[attr]</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (Utils._.includes(dataType, 'AUTOINCREMENT')) {</span>
+<span class="cstat-no" title="statement not covered" >            dataType = dataType.replace(/BIGINT/, 'INTEGER')</span>
+          }
+&nbsp;
+          // SQLite thinks that certain modifiers should come before the length declaration,
+          // whereas other dialects want them after, see http://www.sqlite.org/lang_createtable.html.
+&nbsp;
+          // Start by finding the index of the last of the modifiers
+<span class="cstat-no" title="statement not covered" >          ['UNSIGNED', 'BINARY', 'ZEROFILL'].forEach(<span class="fstat-no" title="function not covered" >function (modifier) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var tmpIndex = dataType.indexOf(modifier)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (tmpIndex &gt; modifierLastIndex) {</span>
+<span class="cstat-no" title="statement not covered" >              modifierLastIndex = tmpIndex + modifier.length</span>
+            }
+          })
+<span class="cstat-no" title="statement not covered" >          if (modifierLastIndex) {</span>
+            // If a modifier was found, and a lenght declaration is given before the modifier, move the length
+<span class="cstat-no" title="statement not covered" >            var length = dataType.match(/\(\s*\d+(\s*,\s*\d)?\s*\)/)</span>
+<span class="cstat-no" title="statement not covered" >            if (length &amp;&amp; length.index &lt; modifierLastIndex) {</span>
+<span class="cstat-no" title="statement not covered" >              dataType = dataType.replace(length[0], '')</span>
+&nbsp;
+              // Since the legnth was placed before the modifier, removing the legnth has changed the index
+<span class="cstat-no" title="statement not covered" >              if (length.index &lt; modifierLastIndex) {</span>
+<span class="cstat-no" title="statement not covered" >                modifierLastIndex -= length[0].length</span>
+              }
+<span class="cstat-no" title="statement not covered" >              dataType = Utils._.insert(dataType, modifierLastIndex, length[0]).trim()</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            modifierLastIndex = -1</span>
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (Utils._.includes(dataType, 'PRIMARY KEY') &amp;&amp; needsMultiplePrimaryKeys) {</span>
+<span class="cstat-no" title="statement not covered" >            primaryKeys.push(attr)</span>
+<span class="cstat-no" title="statement not covered" >            attrStr.push(this.quoteIdentifier(attr) + " " + dataType.replace(/PRIMARY KEY/, 'NOT NULL'))</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            attrStr.push(this.quoteIdentifier(attr) + " " + dataType)</span>
+          }
+        }
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var values = {</span>
+        table: this.quoteIdentifier(tableName),
+        attributes: attrStr.join(", "),
+        charset: (options.charset ? "DEFAULT CHARSET=" + options.charset : "")
+      }
+      , pkString = primaryKeys.map(<span class="fstat-no" title="function not covered" >function(pk) {</span> <span class="cstat-no" title="statement not covered" >return this.quoteIdentifier(pk) }</span>.bind(this)).join(", ")
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (pkString.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >        values.attributes += ", PRIMARY KEY (" + pkString + ")"</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var sql = Utils._.template(query, values).trim() + ";"</span>
+<span class="cstat-no" title="statement not covered" >      return this.replaceBooleanDefaults(sql)</span>
+    },
+&nbsp;
+    booleanValue: <span class="fstat-no" title="function not covered" >function(value){</span>
+<span class="cstat-no" title="statement not covered" >      return !!value ? 1 : 0;</span>
+    },
+&nbsp;
+    dropTableQuery: <span class="fstat-no" title="function not covered" >function(tableName, options) {</span>
+<span class="cstat-no" title="statement not covered" >      options = options || {}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var query = "DROP TABLE IF EXISTS &lt;%= table %&gt;;"</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Utils._.template(query)({</span>
+        table: this.quoteIdentifier(tableName)
+      })
+    },
+&nbsp;
+    addLimitAndOffset: <span class="fstat-no" title="function not covered" >function(options, query){</span>
+<span class="cstat-no" title="statement not covered" >      query = query || ""</span>
+<span class="cstat-no" title="statement not covered" >      if (options.offset &amp;&amp; !options.limit) {</span>
+<span class="cstat-no" title="statement not covered" >        query += " LIMIT " + options.offset + ", " + 10000000000000;</span>
+      } else <span class="cstat-no" title="statement not covered" >if (options.limit &amp;&amp; !(options.include &amp;&amp; (options.limit === 1))) {</span>
+<span class="cstat-no" title="statement not covered" >        if (options.offset) {</span>
+<span class="cstat-no" title="statement not covered" >          query += " LIMIT " + options.offset + ", " + options.limit</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          query += " LIMIT " + options.limit</span>
+        }
+      }
+<span class="cstat-no" title="statement not covered" >      return query;</span>
+    },
+&nbsp;
+    addColumnQuery: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var sql = MySqlQueryGenerator.addColumnQuery.apply(this, arguments)</span>
+<span class="cstat-no" title="statement not covered" >      return this.replaceBooleanDefaults(sql)</span>
+    },
+&nbsp;
+    showTablesQuery: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      return "SELECT name FROM sqlite_master WHERE type='table' and name!='sqlite_sequence';"</span>
+    },
+&nbsp;
+    bulkInsertQuery: <span class="fstat-no" title="function not covered" >function(tableName, attrValueHashes) {</span>
+<span class="cstat-no" title="statement not covered" >      var query = "INSERT INTO &lt;%= table %&gt; (&lt;%= attributes %&gt;) VALUES &lt;%= tuples %&gt;;"</span>
+        , tuples = []
+        , allAttributes = []
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      Utils._.forEach(attrValueHashes, <span class="fstat-no" title="function not covered" >function(attrValueHash, i) {</span></span>
+<span class="cstat-no" title="statement not covered" >        Utils._.forEach(attrValueHash, <span class="fstat-no" title="function not covered" >function(value, key, hash) {</span></span>
+<span class="cstat-no" title="statement not covered" >          if (allAttributes.indexOf(key) === -1) <span class="cstat-no" title="statement not covered" >allAttributes.push(key)</span></span>
+        })
+      })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      Utils._.forEach(attrValueHashes, <span class="fstat-no" title="function not covered" >function(attrValueHash, i) {</span></span>
+<span class="cstat-no" title="statement not covered" >        tuples.push("(" +</span>
+          allAttributes.map(<span class="fstat-no" title="function not covered" >function (key) {</span>
+<span class="cstat-no" title="statement not covered" >            return this.escape(attrValueHash[key])</span>
+          }.bind(this)).join(",") +
+        ")")
+      }.bind(this))
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var replacements  = {</span>
+        table: this.quoteIdentifier(tableName),
+        attributes: allAttributes.map(<span class="fstat-no" title="function not covered" >function(attr){</span>
+<span class="cstat-no" title="statement not covered" >                      return this.quoteIdentifier(attr)</span>
+                    }.bind(this)).join(","),
+        tuples: tuples
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Utils._.template(query)(replacements)</span>
+    },
+&nbsp;
+    deleteQuery: <span class="fstat-no" title="function not covered" >function(tableName, where, options) {</span>
+<span class="cstat-no" title="statement not covered" >      options = options || {}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var query = "DELETE FROM &lt;%= table %&gt; WHERE &lt;%= where %&gt;"</span>
+<span class="cstat-no" title="statement not covered" >      var replacements = {</span>
+        table: this.quoteIdentifier(tableName),
+        where: this.getWhereConditions(where)
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Utils._.template(query)(replacements)</span>
+    },
+&nbsp;
+    attributesToSQL: <span class="fstat-no" title="function not covered" >function(attributes) {</span>
+<span class="cstat-no" title="statement not covered" >      var result = {}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      for (var name in attributes) {</span>
+<span class="cstat-no" title="statement not covered" >        var dataType = attributes[name]</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (Utils.isHash(dataType)) {</span>
+<span class="cstat-no" title="statement not covered" >          var template     = "&lt;%= type %&gt;"</span>
+            , replacements = { type: dataType.type }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (dataType.type.toString() === DataTypes.ENUM.toString()) {</span>
+<span class="cstat-no" title="statement not covered" >            replacements.type = "TEXT"</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (!(Array.isArray(dataType.values) &amp;&amp; (dataType.values.length &gt; 0))) {</span>
+<span class="cstat-no" title="statement not covered" >              throw new Error('Values for ENUM haven\'t been defined.')</span>
+            }
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (dataType.hasOwnProperty('allowNull') &amp;&amp; !dataType.allowNull &amp;&amp; !dataType.primaryKey) {</span>
+<span class="cstat-no" title="statement not covered" >            template += " NOT NULL"</span>
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (Utils.defaultValueSchemable(dataType.defaultValue)) {</span>
+            // TODO thoroughly check that DataTypes.NOW will properly
+            // get populated on all databases as DEFAULT value
+            // i.e. mysql requires: DEFAULT CURRENT_TIMESTAMP
+<span class="cstat-no" title="statement not covered" >            template += " DEFAULT &lt;%= defaultValue %&gt;"</span>
+<span class="cstat-no" title="statement not covered" >            replacements.defaultValue = this.escape(dataType.defaultValue)</span>
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (dataType.unique) {</span>
+<span class="cstat-no" title="statement not covered" >            template += " UNIQUE"</span>
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (dataType.primaryKey) {</span>
+<span class="cstat-no" title="statement not covered" >            template += " PRIMARY KEY"</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (dataType.autoIncrement) {</span>
+<span class="cstat-no" title="statement not covered" >              template += ' AUTOINCREMENT'</span>
+            }
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if(dataType.references) {</span>
+<span class="cstat-no" title="statement not covered" >            template += " REFERENCES &lt;%= referencesTable %&gt; (&lt;%= referencesKey %&gt;)"</span>
+<span class="cstat-no" title="statement not covered" >            replacements.referencesTable = this.quoteIdentifier(dataType.references)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if(dataType.referencesKey) {</span>
+<span class="cstat-no" title="statement not covered" >              replacements.referencesKey = this.quoteIdentifier(dataType.referencesKey)</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >              replacements.referencesKey = this.quoteIdentifier('id')</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if(dataType.onDelete) {</span>
+<span class="cstat-no" title="statement not covered" >              template += " ON DELETE &lt;%= onDeleteAction %&gt;"</span>
+<span class="cstat-no" title="statement not covered" >              replacements.onDeleteAction = dataType.onDelete.toUpperCase()</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if(dataType.onUpdate) {</span>
+<span class="cstat-no" title="statement not covered" >              template += " ON UPDATE &lt;%= onUpdateAction %&gt;"</span>
+<span class="cstat-no" title="statement not covered" >              replacements.onUpdateAction = dataType.onUpdate.toUpperCase()</span>
+            }
+&nbsp;
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          result[name] = Utils._.template(template)(replacements)</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          result[name] = dataType</span>
+        }
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return result</span>
+    },
+&nbsp;
+    findAutoIncrementField: <span class="fstat-no" title="function not covered" >function(factory) {</span>
+<span class="cstat-no" title="statement not covered" >      var fields = []</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      for (var name in factory.attributes) {</span>
+<span class="cstat-no" title="statement not covered" >        if (factory.attributes.hasOwnProperty(name)) {</span>
+<span class="cstat-no" title="statement not covered" >          var definition = factory.attributes[name]</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (definition &amp;&amp; (definition.indexOf('INTEGER PRIMARY KEY AUTOINCREMENT') === 0)) {</span>
+<span class="cstat-no" title="statement not covered" >            fields.push(name)</span>
+          }
+        }
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return fields</span>
+    },
+&nbsp;
+    showIndexQuery: <span class="fstat-no" title="function not covered" >function(tableName) {</span>
+<span class="cstat-no" title="statement not covered" >      var sql = "PRAGMA INDEX_LIST('&lt;%= tableName %&gt;')"</span>
+<span class="cstat-no" title="statement not covered" >      return Utils._.template(sql, { tableName: tableName })</span>
+    },
+&nbsp;
+    removeIndexQuery: <span class="fstat-no" title="function not covered" >function(tableName, indexNameOrAttributes) {</span>
+<span class="cstat-no" title="statement not covered" >      var sql       = "DROP INDEX IF EXISTS &lt;%= indexName %&gt;"</span>
+        , indexName = indexNameOrAttributes
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (typeof indexName !== 'string') {</span>
+<span class="cstat-no" title="statement not covered" >        indexName = Utils._.underscored(tableName + '_' + indexNameOrAttributes.join('_'))</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Utils._.template(sql, { tableName: tableName, indexName: indexName })</span>
+    },
+&nbsp;
+    describeTableQuery: <span class="fstat-no" title="function not covered" >function(tableName, schema, schemaDelimiter) {</span>
+<span class="cstat-no" title="statement not covered" >      var options = {}</span>
+<span class="cstat-no" title="statement not covered" >      options.schema = schema || null</span>
+<span class="cstat-no" title="statement not covered" >      options.schemaDelimiter = schemaDelimiter || null</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var sql = "PRAGMA TABLE_INFO('&lt;%= tableName %&gt;');"</span>
+<span class="cstat-no" title="statement not covered" >      return Utils._.template(sql, { tableName: this.addSchema({tableName: tableName, options: options})})</span>
+    },
+&nbsp;
+    removeColumnQuery: <span class="fstat-no" title="function not covered" >function(tableName, attributes) {</span>
+<span class="cstat-no" title="statement not covered" >      attributes = this.attributesToSQL(attributes)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var backupTableName = tableName + "_backup"</span>
+<span class="cstat-no" title="statement not covered" >      var query = [</span>
+        this.createTableQuery(backupTableName, attributes).replace('CREATE TABLE', 'CREATE TEMPORARY TABLE'),
+        "INSERT INTO &lt;%= tableName %&gt;_backup SELECT &lt;%= attributeNames %&gt; FROM &lt;%= tableName %&gt;;",
+        "DROP TABLE &lt;%= tableName %&gt;;",
+        this.createTableQuery(tableName, attributes),
+        "INSERT INTO &lt;%= tableName %&gt; SELECT &lt;%= attributeNames %&gt; FROM &lt;%= tableName %&gt;_backup;",
+        "DROP TABLE &lt;%= tableName %&gt;_backup;"
+      ].join("")
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Utils._.template(query, {</span>
+        tableName: tableName,
+        attributeNames: Utils._.keys(attributes).join(', ')
+      })
+    },
+&nbsp;
+    renameColumnQuery: <span class="fstat-no" title="function not covered" >function(tableName, attrNameBefore, attrNameAfter, attributes) {</span>
+<span class="cstat-no" title="statement not covered" >      attributes = this.attributesToSQL(attributes)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var backupTableName = tableName + "_backup"</span>
+<span class="cstat-no" title="statement not covered" >      var query = [</span>
+        this.createTableQuery(backupTableName, attributes).replace('CREATE TABLE', 'CREATE TEMPORARY TABLE'),
+        "INSERT INTO &lt;%= tableName %&gt;_backup SELECT &lt;%= attributeNamesImport %&gt; FROM &lt;%= tableName %&gt;;",
+        "DROP TABLE &lt;%= tableName %&gt;;",
+        this.createTableQuery(tableName, attributes),
+        "INSERT INTO &lt;%= tableName %&gt; SELECT &lt;%= attributeNamesExport %&gt; FROM &lt;%= tableName %&gt;_backup;",
+        "DROP TABLE &lt;%= tableName %&gt;_backup;"
+      ].join("")
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Utils._.template(query, {</span>
+        tableName: tableName,
+        attributeNamesImport: Utils._.keys(attributes).map(<span class="fstat-no" title="function not covered" >function(attr) {</span>
+<span class="cstat-no" title="statement not covered" >          return (attrNameAfter === attr) ? attrNameBefore + ' AS ' + attr : attr</span>
+        }.bind(this)).join(', '),
+        attributeNamesExport: Utils._.keys(attributes).map(<span class="fstat-no" title="function not covered" >function(attr) {</span>
+<span class="cstat-no" title="statement not covered" >          return attr</span>
+        }.bind(this)).join(', ')
+      })
+    },
+&nbsp;
+    startTransactionQuery: <span class="fstat-no" title="function not covered" >function(options) {</span>
+<span class="cstat-no" title="statement not covered" >      return "BEGIN TRANSACTION;"</span>
+    },
+&nbsp;
+    setAutocommitQuery: <span class="fstat-no" title="function not covered" >function(value) {</span>
+<span class="cstat-no" title="statement not covered" >      return "-- SQLite does not support SET autocommit."</span>
+    },
+&nbsp;
+    setIsolationLevelQuery: <span class="fstat-no" title="function not covered" >function(value) {</span>
+<span class="cstat-no" title="statement not covered" >      switch (value) {</span>
+        case Transaction.ISOLATION_LEVELS.REPEATABLE_READ:
+<span class="cstat-no" title="statement not covered" >          return "-- SQLite is not able to choose the isolation level REPEATABLE READ."</span>
+        case Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED:
+<span class="cstat-no" title="statement not covered" >          return "PRAGMA read_uncommitted = ON;"</span>
+        case Transaction.ISOLATION_LEVELS.READ_COMMITTED:
+<span class="cstat-no" title="statement not covered" >          return "PRAGMA read_uncommitted = OFF;"</span>
+        case Transaction.ISOLATION_LEVELS.SERIALIZABLE:
+<span class="cstat-no" title="statement not covered" >          return "-- SQLite's default isolation level is SERIALIZABLE. Nothing to do."</span>
+        default:
+<span class="cstat-no" title="statement not covered" >          throw new Error('Unknown isolation level: ' + value)</span>
+      }
+    },
+&nbsp;
+    replaceBooleanDefaults: <span class="fstat-no" title="function not covered" >function(sql) {</span>
+<span class="cstat-no" title="statement not covered" >      return sql.replace(/DEFAULT '?false'?/g, "DEFAULT 0").replace(/DEFAULT '?true'?/g, "DEFAULT 1")</span>
+    },
+&nbsp;
+    quoteIdentifier: <span class="fstat-no" title="function not covered" >function(identifier, force) {</span>
+<span class="cstat-no" title="statement not covered" >      if (identifier === '*') <span class="cstat-no" title="statement not covered" >return identifier</span></span>
+<span class="cstat-no" title="statement not covered" >      return Utils.addTicks(identifier, "`")</span>
+    },
+&nbsp;
+    quoteIdentifiers: <span class="fstat-no" title="function not covered" >function(identifiers, force) {</span>
+<span class="cstat-no" title="statement not covered" >      return identifiers.split('.').map(<span class="fstat-no" title="function not covered" >function(v) {</span> <span class="cstat-no" title="statement not covered" >return this.quoteIdentifier(v, force) }</span>.bind(this)).join('.')</span>
+    },
+&nbsp;
+    quoteTable: <span class="fstat-no" title="function not covered" >function(table) {</span>
+<span class="cstat-no" title="statement not covered" >      return this.quoteIdentifier(table)</span>
+    },
+&nbsp;
+        /**
+     * Generates an SQL query that returns all foreign keys of a table.
+     *
+     * @param  {String} tableName  The name of the table.
+     * @param  {String} schemaName The name of the schema.
+     * @return {String}            The generated sql query.
+     */
+    getForeignKeysQuery: <span class="fstat-no" title="function not covered" >function(tableName, schemaName) {</span>
+<span class="cstat-no" title="statement not covered" >      return "PRAGMA foreign_key_list(\"" + tableName + "\")"</span>
+    }
+  }
+&nbsp;
+  return Utils._.extend({}, MySqlQueryGenerator, QueryGenerator)
+})()
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jan 07 2014 19:27:42 GMT+0100 (CET)</div>
+</div>
+
+<script src="../../../../prettify.js"></script>
+
+<script src="http://yui.yahooapis.com/3.6.0/build/yui/yui-min.js"></script>
+<script>
+
+    YUI().use('datatable', function (Y) {
+
+        var formatters = {
+          pct: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              try {
+                  return o.value.toFixed(2) + '%';
+              } catch (ex) { return o.value + '%'; }
+          },
+          html: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.record.get(o.column.key + '_html');
+          }
+        },
+          defaultFormatter = function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.value;
+          };
+
+        function getColumns(theadNode) {
+            var colNodes = theadNode.all('tr th'),
+                cols = [],
+                col;
+            colNodes.each(function (colNode) {
+                col = {
+                    key: colNode.getAttribute('data-col'),
+                    label: colNode.get('innerHTML') || ' ',
+                    sortable: !colNode.getAttribute('data-nosort'),
+                    className: colNode.getAttribute('class'),
+                    type: colNode.getAttribute('data-type'),
+                    allowHTML: colNode.getAttribute('data-html') === 'true' || colNode.getAttribute('data-fmt') === 'html'
+                };
+                col.formatter = formatters[colNode.getAttribute('data-fmt')] || defaultFormatter;
+                cols.push(col);
+            });
+            return cols;
+        }
+
+        function getRowData(trNode, cols) {
+            var tdNodes = trNode.all('td'),
+                    i,
+                    row = { classes: {} },
+                    node,
+                    name;
+            for (i = 0; i < cols.length; i += 1) {
+                name = cols[i].key;
+                node = tdNodes.item(i);
+                row[name] = node.getAttribute('data-value') || node.get('innerHTML');
+                row[name + '_html'] = node.get('innerHTML');
+                row.classes[name] = node.getAttribute('class');
+                //Y.log('Name: ' + name + '; Value: ' + row[name]);
+                if (cols[i].type === 'number') { row[name] = row[name] * 1; }
+            }
+            //Y.log(row);
+            return row;
+        }
+
+        function getData(tbodyNode, cols) {
+            var data = [];
+            tbodyNode.all('tr').each(function (trNode) {
+                data.push(getRowData(trNode, cols));
+            });
+            return data;
+        }
+
+        function replaceTable(node) {
+            if (!node) { return; }
+            var cols = getColumns(node.one('thead')),
+                data = getData(node.one('tbody'), cols),
+                table,
+                parent = node.get('parentNode');
+
+            table = new Y.DataTable({
+                columns: cols,
+                data: data,
+                sortBy: 'file'
+            });
+            parent.set('innerHTML', '');
+            table.render(parent);
+        }
+
+        Y.on('domready', function () {
+            replaceTable(Y.one('div.coverage-summary table'));
+            if (typeof prettyPrint === 'function') {
+                prettyPrint();
+            }
+        });
+    });
+</script>
+</body>
+</html>

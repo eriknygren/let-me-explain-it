@@ -1,0 +1,1241 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for upstream/lib/migrator.js</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="../../prettify.css">
+
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Helvetica Neue, Helvetica,Arial;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 10em;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Consolas, Menlo, Monaco, monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 14px;
+            font-size: 14px;
+            -moz-tab-size: 2;
+            -o-tab-size:  2;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+            xtext-decoration: line-through;
+        }
+        .missing-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { text-decoration: none; color: #000; }
+        div.coverage-summary a:visited { text-decoration: none; color: #333; }
+        div.coverage-summary a:hover { text-decoration: underline; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: url("http://yui.yahooapis.com/3.6.0/build/datatable-sort/assets/skins/sam/sort-arrow-sprite.png") no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">upstream/lib/migrator.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">11.43% <small>(16 / 140)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">0% <small>(0 / 68)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">1.82% <small>(1 / 55)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">11.68% <small>(16 / 137)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">upstream/lib/</a> &#187; migrator.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const fs     = require("fs")
+    , moment = require("moment")
+&nbsp;
+var Utils          = require(__dirname + "/utils")
+  , Migration      = require(__dirname + "/migration")
+  , DataTypes      = require(__dirname + "/data-types")
+&nbsp;
+module.exports = (function() {
+  var Migrator = <span class="fstat-no" title="function not covered" >function(sequelize, options) {</span>
+<span class="cstat-no" title="statement not covered" >    this.sequelize = sequelize</span>
+<span class="cstat-no" title="statement not covered" >    this.options   = Utils._.extend({</span>
+      path: __dirname + '/../migrations',
+      from: null,
+      to: null,
+      logging: console.log,
+      filesFilter: /\.js$/
+    }, options || {})
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.options.logging === true) {</span>
+<span class="cstat-no" title="statement not covered" >      console.log('DEPRECATION WARNING: The logging-option should be either a function or false. Default: console.log')</span>
+<span class="cstat-no" title="statement not covered" >      this.options.logging = console.log</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.options.logging == console.log) {</span>
+      // using just console.log will break in node &lt; 0.6
+<span class="cstat-no" title="statement not covered" >      this.options.logging = <span class="fstat-no" title="function not covered" >function(s) {</span> <span class="cstat-no" title="statement not covered" >console.log(s) }</span></span>
+    }
+  }
+&nbsp;
+  Object.defineProperty(Migrator.prototype, "queryInterface", {
+    get: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      return this.sequelize.getQueryInterface()</span>
+    }
+  })
+&nbsp;
+  Migrator.prototype.migrate = <span class="fstat-no" title="function not covered" >function(options) {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    options = Utils._.extend({</span>
+      method: 'up'
+    }, options || {})
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      self.getUndoneMigrations(<span class="fstat-no" title="function not covered" >function(err, migrations) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (err) {</span>
+<span class="cstat-no" title="statement not covered" >          emitter.emit('error', err)</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          var chainer = new Utils.QueryChainer()</span>
+            , from    = migrations[0]
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (options.method === 'down') {</span>
+<span class="cstat-no" title="statement not covered" >            from = migrations[0]</span>
+<span class="cstat-no" title="statement not covered" >            migrations.reverse()</span>
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (migrations.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >            self.options.logging("There are no pending migrations.")</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            self.options.logging("Running migrations...")</span>
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          migrations.forEach(<span class="fstat-no" title="function not covered" >function(migration) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var migrationTime</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            chainer.add(migration, 'execute', [options], {</span>
+              before: <span class="fstat-no" title="function not covered" >function(migration) {</span>
+<span class="cstat-no" title="statement not covered" >                if (self.options.logging !== false) {</span>
+<span class="cstat-no" title="statement not covered" >                  self.options.logging(migration.filename)</span>
+                }
+<span class="cstat-no" title="statement not covered" >                migrationTime = process.hrtime()</span>
+              },
+&nbsp;
+              after: <span class="fstat-no" title="function not covered" >function(migration) {</span>
+<span class="cstat-no" title="statement not covered" >                migrationTime = process.hrtime(migrationTime)</span>
+<span class="cstat-no" title="statement not covered" >                migrationTime = Math.round( (migrationTime[0] * 1000) + (migrationTime[1] / 1000000));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                if (self.options.logging !== false) {</span>
+<span class="cstat-no" title="statement not covered" >                  self.options.logging('Completed in ' + migrationTime + 'ms')</span>
+                }
+              },
+&nbsp;
+              success: <span class="fstat-no" title="function not covered" >function(migration, callback) {</span>
+<span class="cstat-no" title="statement not covered" >                if (options.method === 'down') {</span>
+<span class="cstat-no" title="statement not covered" >                  deleteUndoneMigration.call(self, from, migration, callback)</span>
+                } else {
+<span class="cstat-no" title="statement not covered" >                  saveSuccessfulMigration.call(self, from, migration, callback)</span>
+                }
+              }
+            })
+          })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          chainer</span>
+            .runSerially({ skipOnError: true })
+            .success(<span class="fstat-no" title="function not covered" >function() {</span> <span class="cstat-no" title="statement not covered" >emitter.emit('success', null) }</span>)
+            .error(<span class="fstat-no" title="function not covered" >function(err) {</span> <span class="cstat-no" title="statement not covered" >emitter.emit('error', err) }</span>)
+        }
+      })
+    }).run()
+  }
+&nbsp;
+  Migrator.prototype.getUndoneMigrations = <span class="fstat-no" title="function not covered" >function(callback)  {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var filterFrom = <span class="fstat-no" title="function not covered" >function(migrations, from, callback, options) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var result = migrations.filter(<span class="fstat-no" title="function not covered" >function(migration) {</span> <span class="cstat-no" title="statement not covered" >return migration.isAfter(from, options) }</span>)</span>
+<span class="cstat-no" title="statement not covered" >      callback &amp;&amp; callback(null, result)</span>
+    }
+<span class="cstat-no" title="statement not covered" >    var filterTo = <span class="fstat-no" title="function not covered" >function(migrations, to, callback, options) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var result = migrations.filter(<span class="fstat-no" title="function not covered" >function(migration) {</span> <span class="cstat-no" title="statement not covered" >return migration.isBefore(to, options) }</span>)</span>
+<span class="cstat-no" title="statement not covered" >      callback &amp;&amp; callback(null, result)</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var migrationFiles = fs.readdirSync(this.options.path).filter(<span class="fstat-no" title="function not covered" >function(file) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return self.options.filesFilter.test(file)</span>
+    })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var migrations = migrationFiles.map(<span class="fstat-no" title="function not covered" >function(file) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return new Migration(self, self.options.path + '/' + file)</span>
+    })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    migrations = migrations.sort(<span class="fstat-no" title="function not covered" >function(a,b){</span></span>
+<span class="cstat-no" title="statement not covered" >      return parseInt(a.filename.split('-')[0]) - parseInt(b.filename.split('-')[0])</span>
+    })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.options.from) {</span>
+<span class="cstat-no" title="statement not covered" >      filterFrom(migrations, this.options.from, <span class="fstat-no" title="function not covered" >function(err, migrations) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (self.options.to) {</span>
+<span class="cstat-no" title="statement not covered" >          filterTo(migrations, self.options.to, callback)</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          callback &amp;&amp; callback(null, migrations)</span>
+        }
+      })
+    } else {
+<span class="cstat-no" title="statement not covered" >      getLastMigrationIdFromDatabase.call(this).success(<span class="fstat-no" title="function not covered" >function(lastMigrationId) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (lastMigrationId) {</span>
+<span class="cstat-no" title="statement not covered" >          filterFrom(migrations, lastMigrationId, <span class="fstat-no" title="function not covered" >function(err, migrations) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (self.options.to) {</span>
+<span class="cstat-no" title="statement not covered" >              filterTo(migrations, self.options.to, callback)</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >              callback &amp;&amp; callback(null, migrations)</span>
+            }
+          }, { withoutEqual: true })
+        } else {
+<span class="cstat-no" title="statement not covered" >          if (self.options.to) {</span>
+<span class="cstat-no" title="statement not covered" >            filterTo(migrations, self.options.to, callback)</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            callback &amp;&amp; callback(null, migrations)</span>
+          }
+        }
+      }).error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >        callback &amp;&amp; callback(err, null)</span>
+      })
+    }
+  }
+&nbsp;
+  Migrator.prototype.findOrCreateSequelizeMetaDAO = <span class="fstat-no" title="function not covered" >function(syncOptions) {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var storedDAO   = self.sequelize.daoFactoryManager.getDAO('SequelizeMeta')</span>
+        , SequelizeMeta = storedDAO
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (!storedDAO) {</span>
+<span class="cstat-no" title="statement not covered" >        SequelizeMeta = self.sequelize.define('SequelizeMeta', {</span>
+          from: DataTypes.STRING,
+          to:   DataTypes.STRING
+        }, {
+          timestamps: false
+        })
+      }
+&nbsp;
+      // force sync when model has newly created or if syncOptions are passed
+<span class="cstat-no" title="statement not covered" >      if (!storedDAO || syncOptions) {</span>
+<span class="cstat-no" title="statement not covered" >        SequelizeMeta</span>
+          .sync(syncOptions || {})
+          .success(<span class="fstat-no" title="function not covered" >function() {</span> <span class="cstat-no" title="statement not covered" >emitter.emit('success', SequelizeMeta) }</span>)
+          .error(<span class="fstat-no" title="function not covered" >function(err) {</span> <span class="cstat-no" title="statement not covered" >emitter.emit('error', err) }</span>)
+      } else {
+<span class="cstat-no" title="statement not covered" >        emitter.emit('success', SequelizeMeta)</span>
+      }
+    }).run()
+  }
+&nbsp;
+  /**
+   * Explicitly executes one or multiple migrations.
+   *
+   * @param filename {String|Array} Absolute filename(s) of the migrations script
+   * @param options  {Object}       Can contain three functions, before, after and success, which are executed before
+   *                                or after each migration respectively, with one parameter, the migration.
+   */
+  Migrator.prototype.exec = <span class="fstat-no" title="function not covered" >function(filename, options) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var chainer = new Utils.QueryChainer()</span>
+<span class="cstat-no" title="statement not covered" >      var addMigration = <span class="fstat-no" title="function not covered" >function(filename) {</span></span>
+<span class="cstat-no" title="statement not covered" >        self.options.logging('Adding migration script at ' + filename)</span>
+<span class="cstat-no" title="statement not covered" >        var migration = new Migration(self, filename)</span>
+<span class="cstat-no" title="statement not covered" >        chainer.add(migration, 'execute', [{ method: 'up' }], {</span>
+          before: <span class="fstat-no" title="function not covered" >function(migration) {</span>
+<span class="cstat-no" title="statement not covered" >            if (options &amp;&amp; Utils._.isFunction(options.before)) {</span>
+<span class="cstat-no" title="statement not covered" >              options.before.call(self, migration);</span>
+            }
+          },
+          after: <span class="fstat-no" title="function not covered" >function(migration) {</span>
+<span class="cstat-no" title="statement not covered" >            if (options &amp;&amp; Utils._.isFunction(options.after)) {</span>
+<span class="cstat-no" title="statement not covered" >              options.after.call(self, migration);</span>
+            }
+          },
+          success: <span class="fstat-no" title="function not covered" >function(migration, callback) {</span>
+<span class="cstat-no" title="statement not covered" >            if (options &amp;&amp; Utils._.isFunction(options.success)) {</span>
+<span class="cstat-no" title="statement not covered" >              options.success.call(self, migration);</span>
+            }
+<span class="cstat-no" title="statement not covered" >            callback();</span>
+          }
+        })
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (Utils._.isArray(filename)) {</span>
+<span class="cstat-no" title="statement not covered" >        Utils._.each(filename, <span class="fstat-no" title="function not covered" >function(f) {</span></span>
+<span class="cstat-no" title="statement not covered" >          addMigration(f);</span>
+        })
+      } else {
+<span class="cstat-no" title="statement not covered" >        addMigration(filename);</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      chainer</span>
+        .runSerially({ skipOnError: true })
+        .success(<span class="fstat-no" title="function not covered" >function() {</span> <span class="cstat-no" title="statement not covered" >emitter.emit('success', null) }</span>)
+        .error(<span class="fstat-no" title="function not covered" >function(err) {</span> <span class="cstat-no" title="statement not covered" >emitter.emit('error', err) }</span>)
+    }).run()
+  }
+&nbsp;
+  // private
+&nbsp;
+  var getLastMigrationFromDatabase = Migrator.prototype.getLastMigrationFromDatabase = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      self</span>
+        .findOrCreateSequelizeMetaDAO()
+        .success(<span class="fstat-no" title="function not covered" >function(SequelizeMeta) {</span>
+<span class="cstat-no" title="statement not covered" >          SequelizeMeta</span>
+            .find({ order: 'id DESC' })
+            .success(<span class="fstat-no" title="function not covered" >function(meta) {</span>
+<span class="cstat-no" title="statement not covered" >              emitter.emit('success', meta ? meta : null)</span>
+            })
+            .error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >              emitter.emit('error', err)</span>
+            })
+        })
+        .error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >          emitter.emit('error', err)</span>
+        })
+    }).run()
+  }
+&nbsp;
+  var getLastMigrationIdFromDatabase = Migrator.prototype.getLastMigrationIdFromDatabase = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return new Utils.CustomEventEmitter(<span class="fstat-no" title="function not covered" >function(emitter) {</span></span>
+<span class="cstat-no" title="statement not covered" >      getLastMigrationFromDatabase</span>
+        .call(self)
+        .success(<span class="fstat-no" title="function not covered" >function(meta) {</span>
+<span class="cstat-no" title="statement not covered" >          emitter.emit('success', meta ? meta.to : null)</span>
+        })
+        .error(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >          emitter.emit('error', err)</span>
+        })
+    }).run()
+  }
+&nbsp;
+  var getFormattedDateString = Migrator.prototype.getFormattedDateString = <span class="fstat-no" title="function not covered" >function(s) {</span>
+<span class="cstat-no" title="statement not covered" >    var result = null</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >      result = s.match(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/).slice(1, 6).join('-')</span>
+    } catch(e) {
+<span class="cstat-no" title="statement not covered" >      throw new Error(s + ' is no valid migration timestamp format! Use YYYYMMDDHHmmss!')</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return result</span>
+  }
+&nbsp;
+  var stringToDate = Migrator.prototype.stringToDate = <span class="fstat-no" title="function not covered" >function(s) {</span>
+<span class="cstat-no" title="statement not covered" >    return moment(getFormattedDateString(s), "YYYYMMDDHHmmss")</span>
+  }
+&nbsp;
+  var saveSuccessfulMigration = Migrator.prototype.saveSuccessfulMigration = <span class="fstat-no" title="function not covered" >function(from, to, callback) {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    self.findOrCreateSequelizeMetaDAO().success(<span class="fstat-no" title="function not covered" >function(SequelizeMeta) {</span></span>
+<span class="cstat-no" title="statement not covered" >      SequelizeMeta</span>
+        .create({ from: from.migrationId, to: to.migrationId })
+        .success(callback)
+    })
+  }
+&nbsp;
+  var deleteUndoneMigration = Migrator.prototype.deleteUndoneMigration = <span class="fstat-no" title="function not covered" >function(from, to, callback) {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    self.findOrCreateSequelizeMetaDAO().success(<span class="fstat-no" title="function not covered" >function(SequelizeMeta) {</span></span>
+<span class="cstat-no" title="statement not covered" >      SequelizeMeta</span>
+        .find({ where: { from: from.migrationId.toString(), to: to.migrationId.toString() } })
+        .success(<span class="fstat-no" title="function not covered" >function(meta) {</span>
+<span class="cstat-no" title="statement not covered" >          meta.destroy().success(callback)</span>
+        })
+    })
+  }
+&nbsp;
+  return Migrator
+})()
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jan 07 2014 19:27:42 GMT+0100 (CET)</div>
+</div>
+
+<script src="../../prettify.js"></script>
+
+<script src="http://yui.yahooapis.com/3.6.0/build/yui/yui-min.js"></script>
+<script>
+
+    YUI().use('datatable', function (Y) {
+
+        var formatters = {
+          pct: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              try {
+                  return o.value.toFixed(2) + '%';
+              } catch (ex) { return o.value + '%'; }
+          },
+          html: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.record.get(o.column.key + '_html');
+          }
+        },
+          defaultFormatter = function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.value;
+          };
+
+        function getColumns(theadNode) {
+            var colNodes = theadNode.all('tr th'),
+                cols = [],
+                col;
+            colNodes.each(function (colNode) {
+                col = {
+                    key: colNode.getAttribute('data-col'),
+                    label: colNode.get('innerHTML') || ' ',
+                    sortable: !colNode.getAttribute('data-nosort'),
+                    className: colNode.getAttribute('class'),
+                    type: colNode.getAttribute('data-type'),
+                    allowHTML: colNode.getAttribute('data-html') === 'true' || colNode.getAttribute('data-fmt') === 'html'
+                };
+                col.formatter = formatters[colNode.getAttribute('data-fmt')] || defaultFormatter;
+                cols.push(col);
+            });
+            return cols;
+        }
+
+        function getRowData(trNode, cols) {
+            var tdNodes = trNode.all('td'),
+                    i,
+                    row = { classes: {} },
+                    node,
+                    name;
+            for (i = 0; i < cols.length; i += 1) {
+                name = cols[i].key;
+                node = tdNodes.item(i);
+                row[name] = node.getAttribute('data-value') || node.get('innerHTML');
+                row[name + '_html'] = node.get('innerHTML');
+                row.classes[name] = node.getAttribute('class');
+                //Y.log('Name: ' + name + '; Value: ' + row[name]);
+                if (cols[i].type === 'number') { row[name] = row[name] * 1; }
+            }
+            //Y.log(row);
+            return row;
+        }
+
+        function getData(tbodyNode, cols) {
+            var data = [];
+            tbodyNode.all('tr').each(function (trNode) {
+                data.push(getRowData(trNode, cols));
+            });
+            return data;
+        }
+
+        function replaceTable(node) {
+            if (!node) { return; }
+            var cols = getColumns(node.one('thead')),
+                data = getData(node.one('tbody'), cols),
+                table,
+                parent = node.get('parentNode');
+
+            table = new Y.DataTable({
+                columns: cols,
+                data: data,
+                sortBy: 'file'
+            });
+            parent.set('innerHTML', '');
+            table.render(parent);
+        }
+
+        Y.on('domready', function () {
+            replaceTable(Y.one('div.coverage-summary table'));
+            if (typeof prettyPrint === 'function') {
+                prettyPrint();
+            }
+        });
+    });
+</script>
+</body>
+</html>

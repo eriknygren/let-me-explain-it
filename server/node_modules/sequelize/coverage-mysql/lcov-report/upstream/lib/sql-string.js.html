@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for upstream/lib/sql-string.js</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="../../prettify.css">
+
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Helvetica Neue, Helvetica,Arial;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 10em;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Consolas, Menlo, Monaco, monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 14px;
+            font-size: 14px;
+            -moz-tab-size: 2;
+            -o-tab-size:  2;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+            xtext-decoration: line-through;
+        }
+        .missing-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { text-decoration: none; color: #000; }
+        div.coverage-summary a:visited { text-decoration: none; color: #333; }
+        div.coverage-summary a:hover { text-decoration: underline; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: url("http://yui.yahooapis.com/3.6.0/build/datatable-sort/assets/skins/sam/sort-arrow-sprite.png") no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">upstream/lib/sql-string.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">39.34% <small>(48 / 122)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">29.52% <small>(31 / 105)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">41.18% <small>(7 / 17)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">39.67% <small>(48 / 121)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">upstream/lib/</a> &#187; sql-string.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1609</span>
+<span class="cline-any cline-yes">12872</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1609</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2484</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2484</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2484</span>
+<span class="cline-any cline-yes">177</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2307</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">652</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1609</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1609</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1609</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1609</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1609</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1609</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1609</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">63</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">63</span>
+<span class="cline-any cline-yes">76</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">76</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-yes">986</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var moment = require("moment")
+  , isArrayBufferView
+  , SqlString = exports;
+&nbsp;
+<span class="missing-if-branch" title="if path not taken"" >I</span>if (typeof ArrayBufferView === 'function') {
+<span class="cstat-no" title="statement not covered" >  isArrayBufferView = <span class="fstat-no" title="function not covered" >function(object) {</span> <span class="cstat-no" title="statement not covered" >return object &amp;&amp; (object instanceof ArrayBufferView) }</span></span>
+} else {
+  var arrayBufferViews = [
+    Int8Array, Uint8Array, Int16Array, Uint16Array,
+    Int32Array, Uint32Array, Float32Array, Float64Array
+  ]
+  isArrayBufferView = function(object) {
+    for (var i=0; i&lt;8; i++) {
+      <span class="missing-if-branch" title="if path not taken"" >I</span>if (object instanceof arrayBufferViews[i]) {
+<span class="cstat-no" title="statement not covered" >        return true</span>
+      }
+    }
+    return false
+  };
+}
+&nbsp;
+&nbsp;
+SqlString.escapeId = <span class="fstat-no" title="function not covered" >function (val, forbidQualified) {</span>
+<span class="cstat-no" title="statement not covered" >  if (forbidQualified) {</span>
+<span class="cstat-no" title="statement not covered" >    return '`' + val.replace(/`/g, '``') + '`'</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return '`' + val.replace(/`/g, '``').replace(/\./g, '`.`') + '`'</span>
+}
+&nbsp;
+SqlString.escape = function(val, stringifyObjects, timeZone, dialect, field) {
+  <span class="missing-if-branch" title="if path not taken"" >I</span>if (arguments.length === 1 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >typeof arguments[0] === "object")</span> {
+<span class="cstat-no" title="statement not covered" >    val = val.val || val.value || null</span>
+<span class="cstat-no" title="statement not covered" >    stringifyObjects = val.stringifyObjects || val.objects || undefined</span>
+<span class="cstat-no" title="statement not covered" >    timeZone = val.timeZone || val.zone || null</span>
+<span class="cstat-no" title="statement not covered" >    dialect = val.dialect || null</span>
+<span class="cstat-no" title="statement not covered" >    field = val.field || null</span>
+  }
+  else <span class="missing-if-branch" title="if path not taken"" >I</span>if (arguments.length &lt; 3 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >typeof arguments[1] === "object")</span> {
+<span class="cstat-no" title="statement not covered" >    timeZone = stringifyObjects.timeZone || stringifyObjects.zone || null</span>
+<span class="cstat-no" title="statement not covered" >    dialect = stringifyObjects.dialect || null</span>
+<span class="cstat-no" title="statement not covered" >    field = stringifyObjects.field || null</span>
+  }
+&nbsp;
+  if (val === undefined || val === null) {
+    return 'NULL';
+  }
+&nbsp;
+  switch (typeof val) {
+  case 'boolean':
+    // SQLite doesn't have true/false support. MySQL aliases true/false to 1/0
+    // for us. Postgres actually has a boolean type with true/false literals,
+    // but sequelize doesn't use it yet.
+    return dialect === 'sqlite' ? <span class="branch-0 cbranch-no" title="branch not covered" >+!!val </span>: ('' + !!val);
+  case 'number':
+    return val+'';
+  }
+&nbsp;
+  if (val instanceof Date) {
+    val = SqlString.dateToString(val, timeZone || "Z", dialect)
+  }
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken"" >I</span>if (Buffer.isBuffer(val)) {
+<span class="cstat-no" title="statement not covered" >    return SqlString.bufferToString(val, dialect)</span>
+  }
+  <span class="missing-if-branch" title="if path not taken"" >I</span>if (Array.isArray(val) || isArrayBufferView(val)) {
+<span class="cstat-no" title="statement not covered" >    return SqlString.arrayToList(val, timeZone, dialect, field)</span>
+  }
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken"" >I</span>if (typeof val === 'object') {
+<span class="cstat-no" title="statement not covered" >    if (stringifyObjects) {</span>
+<span class="cstat-no" title="statement not covered" >      val = val.toString()</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return SqlString.objectToValues(val, timeZone)</span>
+    }
+  }
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken"" >I</span>if (dialect === 'postgres' || dialect === 'sqlite') {
+    // http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html#SQL-SYNTAX-STRINGS
+    // http://stackoverflow.com/q/603572/130598
+<span class="cstat-no" title="statement not covered" >    val = val.replace(/'/g, "''")</span>
+  } else {
+    val = val.replace(/[\0\n\r\b\t\\\'\"\x1a]/g, function(s) {
+      switch(s) {
+<span class="branch-0 cbranch-no" title="branch not covered" >        case "\0": <span class="cstat-no" title="statement not covered" >return "\\0";</span></span>
+<span class="branch-1 cbranch-no" title="branch not covered" >        case "\n": <span class="cstat-no" title="statement not covered" >return "\\n";</span></span>
+<span class="branch-2 cbranch-no" title="branch not covered" >        case "\r": <span class="cstat-no" title="statement not covered" >return "\\r";</span></span>
+<span class="branch-3 cbranch-no" title="branch not covered" >        case "\b": <span class="cstat-no" title="statement not covered" >return "\\b";</span></span>
+<span class="branch-4 cbranch-no" title="branch not covered" >        case "\t": <span class="cstat-no" title="statement not covered" >return "\\t";</span></span>
+<span class="branch-5 cbranch-no" title="branch not covered" >        case "\x1a": <span class="cstat-no" title="statement not covered" >return "\\Z";</span></span>
+        default: return "\\"+s;
+      }
+    })
+  }
+  return "'"+val+"'"
+}
+&nbsp;
+SqlString.arrayToList = <span class="fstat-no" title="function not covered" >function(array, timeZone, dialect, field) {</span>
+<span class="cstat-no" title="statement not covered" >  if (dialect === 'postgres') {</span>
+<span class="cstat-no" title="statement not covered" >    if (array.map) {</span>
+<span class="cstat-no" title="statement not covered" >      var valstr = array.map(<span class="fstat-no" title="function not covered" >function(v) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return SqlString.escape(v, true, timeZone, dialect, field)</span>
+      }).join(',')
+    } else {
+<span class="cstat-no" title="statement not covered" >      var valstr = ""</span>
+<span class="cstat-no" title="statement not covered" >      for (var i = 0; i &lt; array.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >        valstr += SqlString.escape(array[i], true, timeZone, dialect, field) + ','</span>
+      }
+<span class="cstat-no" title="statement not covered" >      valstr = valstr.slice(0,-1)</span>
+    }
+<span class="cstat-no" title="statement not covered" >    var ret = 'ARRAY[' + valstr + ']'</span>
+<span class="cstat-no" title="statement not covered" >    if (!!field &amp;&amp; !!field.type) {</span>
+<span class="cstat-no" title="statement not covered" >      ret += '::' + field.type.replace(/\(\d+\)/g, '')</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return ret</span>
+  } else {
+<span class="cstat-no" title="statement not covered" >    if (array.map) {</span>
+<span class="cstat-no" title="statement not covered" >      return array.map(<span class="fstat-no" title="function not covered" >function(v) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (Array.isArray(v)) {</span>
+<span class="cstat-no" title="statement not covered" >          return '(' + SqlString.arrayToList(v, timeZone, dialect) + ')'</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return SqlString.escape(v, true, timeZone, dialect)</span>
+      }).join(', ')
+    } else {
+<span class="cstat-no" title="statement not covered" >      var valstr = ""</span>
+<span class="cstat-no" title="statement not covered" >      for (var i = 0; i &lt; array.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >        valstr += SqlString.escape(array[i], true, timeZone, dialect) + ', '</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return valstr.slice(0, -2)</span>
+    }
+  }
+}
+&nbsp;
+SqlString.format = function(sql, values, timeZone, dialect) {
+  values = [].concat(values);
+&nbsp;
+  return sql.replace(/\?/g, function(match) {
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (!values.length) {
+<span class="cstat-no" title="statement not covered" >      return match</span>
+    }
+&nbsp;
+    return SqlString.escape(values.shift(), false, timeZone, dialect)
+  })
+}
+&nbsp;
+SqlString.formatNamedParameters = <span class="fstat-no" title="function not covered" >function(sql, values, timeZone, dialect) {</span>
+<span class="cstat-no" title="statement not covered" >  return sql.replace(/\:(?!\d)(\w+)/g, <span class="fstat-no" title="function not covered" >function (value, key) {</span></span>
+<span class="cstat-no" title="statement not covered" >    if (values.hasOwnProperty(key)) {</span>
+<span class="cstat-no" title="statement not covered" >      return SqlString.escape(values[key], false, timeZone, dialect)</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      throw new Error('Named parameter "' + value + '" has no value in the given object.')</span>
+    }
+  })
+}
+&nbsp;
+SqlString.dateToString = function(date, timeZone, dialect) {
+  var dt = new Date(date)
+&nbsp;
+  // TODO: Ideally all dialects would work a bit more like this
+  <span class="missing-if-branch" title="if path not taken"" >I</span>if (dialect === "postgres") {
+<span class="cstat-no" title="statement not covered" >    return moment(dt).zone('+00:00').format("YYYY-MM-DD HH:mm:ss.SSS Z")</span>
+  }
+&nbsp;
+  <span class="missing-if-branch" title="else path not taken"" >E</span>if (timeZone !== 'local') {
+    var tz = convertTimezone(timeZone)
+&nbsp;
+    dt.setTime(dt.getTime() + (dt.getTimezoneOffset() * 60000))
+    <span class="missing-if-branch" title="else path not taken"" >E</span>if (tz !== false) {
+      dt.setTime(dt.getTime() + (tz * 60000))
+    }
+  }
+&nbsp;
+  return moment(dt).format("YYYY-MM-DD HH:mm:ss")
+}
+&nbsp;
+SqlString.bufferToString = <span class="fstat-no" title="function not covered" >function(buffer, dialect) {</span>
+<span class="cstat-no" title="statement not covered" >  var hex = ''</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    hex = buffer.toString('hex')</span>
+  } catch (err) {
+    // node v0.4.x does not support hex / throws unknown encoding error
+<span class="cstat-no" title="statement not covered" >    for (var i = 0; i &lt; buffer.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      var byte = buffer[i]</span>
+<span class="cstat-no" title="statement not covered" >      hex += zeroPad(byte.toString(16))</span>
+    }
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (dialect === 'postgres') {</span>
+    // bytea hex format http://www.postgresql.org/docs/current/static/datatype-binary.html
+<span class="cstat-no" title="statement not covered" >    return "E'\\\\x" + hex+ "'"</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return "X'" + hex+ "'"</span>
+}
+&nbsp;
+SqlString.objectToValues = <span class="fstat-no" title="function not covered" >function(object, timeZone) {</span>
+<span class="cstat-no" title="statement not covered" >  var values = []</span>
+<span class="cstat-no" title="statement not covered" >  for (var key in object) {</span>
+<span class="cstat-no" title="statement not covered" >    var value = object[key]</span>
+<span class="cstat-no" title="statement not covered" >    if(typeof value === 'function') {</span>
+<span class="cstat-no" title="statement not covered" >      continue;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    values.push(this.escapeId(key) + ' = ' + SqlString.escape(value, true, timeZone))</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return values.join(', ')</span>
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function zeroPad(number) {</span>
+<span class="cstat-no" title="statement not covered" >  return (number &lt; 10) ? '0' + number : number</span>
+}
+&nbsp;
+function convertTimezone(tz) {
+  <span class="missing-if-branch" title="else path not taken"" >E</span>if (tz == "Z") {
+    return 0
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  var m = tz.match(/([\+\-\s])(\d\d):?(\d\d)?/)</span>
+<span class="cstat-no" title="statement not covered" >  if (m) {</span>
+<span class="cstat-no" title="statement not covered" >    return (m[1] == '-' ? -1 : 1) * (parseInt(m[2], 10) + ((m[3] ? parseInt(m[3], 10) : 0) / 60)) * 60</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return false</span>
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jan 07 2014 19:27:42 GMT+0100 (CET)</div>
+</div>
+
+<script src="../../prettify.js"></script>
+
+<script src="http://yui.yahooapis.com/3.6.0/build/yui/yui-min.js"></script>
+<script>
+
+    YUI().use('datatable', function (Y) {
+
+        var formatters = {
+          pct: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              try {
+                  return o.value.toFixed(2) + '%';
+              } catch (ex) { return o.value + '%'; }
+          },
+          html: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.record.get(o.column.key + '_html');
+          }
+        },
+          defaultFormatter = function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.value;
+          };
+
+        function getColumns(theadNode) {
+            var colNodes = theadNode.all('tr th'),
+                cols = [],
+                col;
+            colNodes.each(function (colNode) {
+                col = {
+                    key: colNode.getAttribute('data-col'),
+                    label: colNode.get('innerHTML') || ' ',
+                    sortable: !colNode.getAttribute('data-nosort'),
+                    className: colNode.getAttribute('class'),
+                    type: colNode.getAttribute('data-type'),
+                    allowHTML: colNode.getAttribute('data-html') === 'true' || colNode.getAttribute('data-fmt') === 'html'
+                };
+                col.formatter = formatters[colNode.getAttribute('data-fmt')] || defaultFormatter;
+                cols.push(col);
+            });
+            return cols;
+        }
+
+        function getRowData(trNode, cols) {
+            var tdNodes = trNode.all('td'),
+                    i,
+                    row = { classes: {} },
+                    node,
+                    name;
+            for (i = 0; i < cols.length; i += 1) {
+                name = cols[i].key;
+                node = tdNodes.item(i);
+                row[name] = node.getAttribute('data-value') || node.get('innerHTML');
+                row[name + '_html'] = node.get('innerHTML');
+                row.classes[name] = node.getAttribute('class');
+                //Y.log('Name: ' + name + '; Value: ' + row[name]);
+                if (cols[i].type === 'number') { row[name] = row[name] * 1; }
+            }
+            //Y.log(row);
+            return row;
+        }
+
+        function getData(tbodyNode, cols) {
+            var data = [];
+            tbodyNode.all('tr').each(function (trNode) {
+                data.push(getRowData(trNode, cols));
+            });
+            return data;
+        }
+
+        function replaceTable(node) {
+            if (!node) { return; }
+            var cols = getColumns(node.one('thead')),
+                data = getData(node.one('tbody'), cols),
+                table,
+                parent = node.get('parentNode');
+
+            table = new Y.DataTable({
+                columns: cols,
+                data: data,
+                sortBy: 'file'
+            });
+            parent.set('innerHTML', '');
+            table.render(parent);
+        }
+
+        Y.on('domready', function () {
+            replaceTable(Y.one('div.coverage-summary table'));
+            if (typeof prettyPrint === 'function') {
+                prettyPrint();
+            }
+        });
+    });
+</script>
+</body>
+</html>

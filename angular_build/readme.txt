@@ -1,0 +1,1 @@
+Run 'npm-install' and then 'Grunt' in the command line to created a minifed build of the angular JS application

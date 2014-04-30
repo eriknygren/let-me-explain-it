@@ -1,0 +1,1502 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for upstream/lib/dialects/mysql/connector-manager.js</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="../../../../prettify.css">
+
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Helvetica Neue, Helvetica,Arial;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 10em;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Consolas, Menlo, Monaco, monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 14px;
+            font-size: 14px;
+            -moz-tab-size: 2;
+            -o-tab-size:  2;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+            xtext-decoration: line-through;
+        }
+        .missing-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { text-decoration: none; color: #000; }
+        div.coverage-summary a:visited { text-decoration: none; color: #333; }
+        div.coverage-summary a:hover { text-decoration: underline; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: url("http://yui.yahooapis.com/3.6.0/build/datatable-sort/assets/skins/sam/sort-arrow-sprite.png") no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+    </style>
+</head>
+<body>
+<div class="header medium">
+    <h1>Code coverage report for <span class="entity">upstream/lib/dialects/mysql/connector-manager.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">57.81% <small>(111 / 192)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">40.59% <small>(41 / 101)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">55.56% <small>(25 / 45)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">57.59% <small>(110 / 191)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+    </h2>
+    <div class="path"><a href="../../../../index.html">All files</a> &#187; <a href="index.html">upstream/lib/dialects/mysql/</a> &#187; connector-manager.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2701</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-yes">395</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">395</span>
+<span class="cline-any cline-yes">359</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2532</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-yes">128267</span>
+<span class="cline-any cline-yes">128267</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-yes">2562</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2569</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">395</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2812</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-yes">2568</span>
+<span class="cline-any cline-yes">243</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var mysql
+  , Pooling = require('generic-pool')
+  , Query   = require("./query")
+  , Utils   = require("../../utils")
+  , without = function(arr, elem) { return arr.filter(function(e) { return e != elem }) }
+&nbsp;
+module.exports = (function() {
+  var ConnectorManager = function(sequelize, config) {
+    try {
+      <span class="missing-if-branch" title="if path not taken"" >I</span>if (config.dialectModulePath) {
+<span class="cstat-no" title="statement not covered" >        mysql = require(config.dialectModulePath)</span>
+      } else {
+        mysql = require('mysql')
+      }
+    } catch (err) {
+<span class="cstat-no" title="statement not covered" >      console.log('You need to install mysql package manually')</span>
+    }
+&nbsp;
+    this.sequelize = sequelize
+    this.client = null
+    this.config = config || <span class="branch-1 cbranch-no" title="branch not covered" >{}</span>
+    this.config.port = this.config.port || <span class="branch-1 cbranch-no" title="branch not covered" >3306</span>
+    this.disconnectTimeoutId = null
+    this.queue = []
+    this.activeQueue = []
+    this.maxConcurrentQueries = (this.config.maxConcurrentQueries || 50)
+    this.poolCfg = Utils._.defaults(this.config.pool, {
+      maxConnections: 10,
+      minConnections: 0,
+      maxIdleTime: 1000,
+      handleDisconnects: false,
+      validate: validateConnection
+    });
+    this.pendingQueries = 0;
+    this.useReplicaton = !!config.replication;
+    this.useQueue = config.queue !== undefined ? config.queue : <span class="branch-1 cbranch-no" title="branch not covered" >true;</span>
+&nbsp;
+    var self = this
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (this.useReplicaton) {
+<span class="cstat-no" title="statement not covered" >      var reads = 0,</span>
+        writes = 0;
+&nbsp;
+      // Init configs with options from config if not present
+<span class="cstat-no" title="statement not covered" >      for (var i in config.replication.read) {</span>
+<span class="cstat-no" title="statement not covered" >        config.replication.read[i] = Utils._.defaults(config.replication.read[i], {</span>
+          host: this.config.host,
+          port: this.config.port,
+          username: this.config.username,
+          password: this.config.password,
+          database: this.config.database
+        });
+      }
+<span class="cstat-no" title="statement not covered" >      config.replication.write = Utils._.defaults(config.replication.write, {</span>
+        host: this.config.host,
+        port: this.config.port,
+        username: this.config.username,
+        password: this.config.password,
+        database: this.config.database
+      });
+&nbsp;
+      // I'll make my own pool, with blackjack and hookers!
+<span class="cstat-no" title="statement not covered" >      this.pool = {</span>
+        release: <span class="fstat-no" title="function not covered" >function (client) {</span>
+<span class="cstat-no" title="statement not covered" >          if (client.queryType == 'read') {</span>
+<span class="cstat-no" title="statement not covered" >            return this.read.release(client);</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            return this.write.release(client);</span>
+          }
+        },
+        acquire: <span class="fstat-no" title="function not covered" >function (callback, priority, queryType) {</span>
+<span class="cstat-no" title="statement not covered" >          if (queryType == 'SELECT') {</span>
+<span class="cstat-no" title="statement not covered" >            this.read.acquire(callback, priority);</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            this.write.acquire(callback, priority);</span>
+          }
+        },
+        drain: <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >          this.read.drain();</span>
+<span class="cstat-no" title="statement not covered" >          this.write.drain();</span>
+        },
+        read: Pooling.Pool({
+          name: 'sequelize-read',
+          create: <span class="fstat-no" title="function not covered" >function (done) {</span>
+<span class="cstat-no" title="statement not covered" >            if (reads &gt;= self.config.replication.read.length) {</span>
+<span class="cstat-no" title="statement not covered" >              reads = 0</span>
+            }
+<span class="cstat-no" title="statement not covered" >            var config = self.config.replication.read[reads++];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            connect.call(self, <span class="fstat-no" title="function not covered" >function (err, connection) {</span></span>
+<span class="cstat-no" title="statement not covered" >              connection.queryType = 'read'</span>
+<span class="cstat-no" title="statement not covered" >              done(null, connection)</span>
+            }, config);
+          },
+          destroy: <span class="fstat-no" title="function not covered" >function(client) {</span>
+<span class="cstat-no" title="statement not covered" >            disconnect.call(self, client)</span>
+          },
+          validate: self.poolCfg.validate,
+          max: self.poolCfg.maxConnections,
+          min: self.poolCfg.minConnections,
+          idleTimeoutMillis: self.poolCfg.maxIdleTime
+        }),
+        write: Pooling.Pool({
+          name: 'sequelize-write',
+          create: <span class="fstat-no" title="function not covered" >function (done) {</span>
+<span class="cstat-no" title="statement not covered" >            connect.call(self, <span class="fstat-no" title="function not covered" >function (err, connection) {</span></span>
+<span class="cstat-no" title="statement not covered" >              connection.queryType = 'write'</span>
+<span class="cstat-no" title="statement not covered" >              done(null, connection)</span>
+            }, self.config.replication.write);
+          },
+          destroy: <span class="fstat-no" title="function not covered" >function(client) {</span>
+<span class="cstat-no" title="statement not covered" >            disconnect.call(self, client)</span>
+          },
+          validate: self.poolCfg.validate,
+          max: self.poolCfg.maxConnections,
+          min: self.poolCfg.minConnections,
+          idleTimeoutMillis: self.poolCfg.maxIdleTime
+        })
+      };
+    } else <span class="missing-if-branch" title="else path not taken"" >E</span>if (this.poolCfg) {
+      //the user has requested pooling, so create our connection pool
+      this.pool = Pooling.Pool({
+        name: 'sequelize-mysql',
+        create: function (done) {
+          connect.call(self, done)
+        },
+        destroy: function(client) {
+          disconnect.call(self, client)
+        },
+        max: self.poolCfg.maxConnections,
+        min: self.poolCfg.minConnections,
+        validate: self.poolCfg.validate,
+        idleTimeoutMillis: self.poolCfg.maxIdleTime
+      })
+    }
+&nbsp;
+    process.on('exit', <span class="fstat-no" title="function not covered" >function () {</span>
+      //be nice &amp; close our connections on exit
+<span class="cstat-no" title="statement not covered" >      if (self.pool) {</span>
+<span class="cstat-no" title="statement not covered" >        self.pool.drain()</span>
+      } else <span class="cstat-no" title="statement not covered" >if (self.client) {</span>
+<span class="cstat-no" title="statement not covered" >        disconnect(self.client)</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return</span>
+    })
+  }
+&nbsp;
+  Utils._.extend(ConnectorManager.prototype, require("../connector-manager").prototype);
+&nbsp;
+  var isConnecting = false;
+&nbsp;
+  ConnectorManager.prototype.query = function(sql, callee, options) {
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (!this.isConnected &amp;&amp; !this.pool) {
+<span class="cstat-no" title="statement not covered" >      this.connect()</span>
+    }
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken"" >E</span>if (this.useQueue) {
+      var queueItem = {
+        query: new Query(this.client, this.sequelize, callee, options || <span class="branch-1 cbranch-no" title="branch not covered" >{})</span>,
+        sql: sql
+      };
+&nbsp;
+      queueItem.query.options.uuid = this.config.uuid
+      enqueue.call(this, queueItem, options)
+      return queueItem.query
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var self = this, query = new Query(this.client, this.sequelize, callee, options || {});</span>
+<span class="cstat-no" title="statement not covered" >    this.pendingQueries++;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    query.options.uuid = this.config.uuid</span>
+<span class="cstat-no" title="statement not covered" >    query.done(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      self.pendingQueries--;</span>
+<span class="cstat-no" title="statement not covered" >      if (self.pool) {</span>
+<span class="cstat-no" title="statement not covered" >        self.pool.release(query.client);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        if (self.pendingQueries === 0) {</span>
+<span class="cstat-no" title="statement not covered" >          setTimeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            self.pendingQueries === 0 &amp;&amp; self.disconnect.call(self)</span>
+          }, 100);
+        }
+      }
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this.pool) {</span>
+<span class="cstat-no" title="statement not covered" >      query.run(sql);</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      this.pool.acquire(<span class="fstat-no" title="function not covered" >function(err, client) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (err) {</span>
+<span class="cstat-no" title="statement not covered" >          return query.emit('error', err)</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        query.client = client</span>
+<span class="cstat-no" title="statement not covered" >        query.run(sql)</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }, undefined, options.type)
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return query;</span>
+  };
+&nbsp;
+  ConnectorManager.prototype.connect = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+    // in case database is slow to connect, prevent orphaning the client
+<span class="cstat-no" title="statement not covered" >    if (this.isConnecting || this.pool) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    connect.call(self, <span class="fstat-no" title="function not covered" >function(err, client) {</span></span>
+<span class="cstat-no" title="statement not covered" >      self.client = client;</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    });
+<span class="cstat-no" title="statement not covered" >    return;</span>
+  };
+&nbsp;
+  ConnectorManager.prototype.disconnect = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.client) {</span>
+<span class="cstat-no" title="statement not covered" >      disconnect.call(this, this.client)</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return</span>
+  };
+&nbsp;
+&nbsp;
+  // private
+&nbsp;
+  var disconnect = function(client) {
+    var self = this;
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (!this.useQueue) {
+<span class="cstat-no" title="statement not covered" >      this.client = null;</span>
+    }
+&nbsp;
+    client.end(function() {
+      <span class="missing-if-branch" title="if path not taken"" >I</span>if (!self.useQueue) {
+<span class="cstat-no" title="statement not covered" >        return client.destroy();</span>
+      }
+&nbsp;
+      var intervalObj = null
+      var cleanup = function () {
+        var retryCt = 0
+        // make sure to let client finish before calling destroy
+        if (self &amp;&amp; self.hasQueuedItems) {
+          return
+        }
+        // needed to prevent mysql connection leak
+        client.destroy()
+        <span class="missing-if-branch" title="if path not taken"" >I</span>if (self &amp;&amp; self.client) {
+<span class="cstat-no" title="statement not covered" >          self.client = null</span>
+        }
+        clearInterval(intervalObj)
+      }
+      intervalObj = setInterval(cleanup, 10)
+      cleanup()
+      return
+    })
+  }
+&nbsp;
+  var connect = function(done, config) {
+    config = config || this.config
+&nbsp;
+    var emitter = new (require('events').EventEmitter)()
+    var connectionConfig = {
+      host: config.host,
+      port: config.port,
+      user: config.username,
+      password: config.password,
+      database: config.database,
+      timezone: 'Z'
+    };
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken"" >E</span>if (config.dialectOptions) {
+      Object.keys(config.dialectOptions).forEach(<span class="fstat-no" title="function not covered" >function (key) {</span>
+<span class="cstat-no" title="statement not covered" >        connectionConfig[key] = config.dialectOptions[key];</span>
+      });
+    }
+&nbsp;
+    var connection = mysql.createConnection(connectionConfig);
+&nbsp;
+    connection.connect(function(err) {
+      <span class="missing-if-branch" title="if path not taken"" >I</span>if (err) {
+<span class="cstat-no" title="statement not covered" >        switch(err.code) {</span>
+        case 'ECONNREFUSED':
+        case 'ER_ACCESS_D2ENIED_ERROR':
+<span class="cstat-no" title="statement not covered" >          emitter.emit('error', 'Failed to authenticate for MySQL. Please double check your settings.')</span>
+<span class="cstat-no" title="statement not covered" >          break</span>
+        case 'ENOTFOUND':
+        case 'EHOSTUNREACH':
+        case 'EINVAL':
+<span class="cstat-no" title="statement not covered" >          emitter.emit('error', 'Failed to find MySQL server. Please double check your settings.')</span>
+<span class="cstat-no" title="statement not covered" >          break</span>
+        }
+      }
+    })
+&nbsp;
+    connection.query("SET time_zone = '+0:00'");
+    // client.setMaxListeners(self.maxConcurrentQueries)
+    this.isConnecting = false
+    <span class="missing-if-branch" title="if path not taken"" >I</span>if (config.pool.handleDisconnects) {
+<span class="cstat-no" title="statement not covered" >      handleDisconnect(this.pool, connection)</span>
+    }
+    done(null, connection)
+  }
+&nbsp;
+  var handleDisconnect = <span class="fstat-no" title="function not covered" >function(pool, client) {</span>
+<span class="cstat-no" title="statement not covered" >    client.on('error', <span class="fstat-no" title="function not covered" >function(err) {</span></span>
+<span class="cstat-no" title="statement not covered" >      if (err.code !== 'PROTOCOL_CONNECTION_LOST') {</span>
+<span class="cstat-no" title="statement not covered" >        throw err</span>
+      }
+<span class="cstat-no" title="statement not covered" >      pool.destroy(client)</span>
+    })
+  }
+&nbsp;
+  var validateConnection = function(client) {
+    return client &amp;&amp; client.state !== 'disconnected'
+  }
+&nbsp;
+  var enqueue = function(queueItem, options) {
+    options = options || <span class="branch-1 cbranch-no" title="branch not covered" >{}</span>
+    <span class="missing-if-branch" title="else path not taken"" >E</span>if (this.activeQueue.length &lt; this.maxConcurrentQueries) {
+      this.activeQueue.push(queueItem)
+      <span class="missing-if-branch" title="else path not taken"" >E</span>if (this.pool) {
+        var self = this
+        this.pool.acquire(function(err, client) {
+          <span class="missing-if-branch" title="if path not taken"" >I</span>if (err) {
+<span class="cstat-no" title="statement not covered" >            queueItem.query.emit('error', err)</span>
+<span class="cstat-no" title="statement not covered" >            return</span>
+          }
+          //we set the client here, asynchronously, when getting a pooled connection
+          //allowing the ConnectorManager.query method to remain synchronous
+          queueItem.query.client = client
+          queueItem.client = client
+          execQueueItem.call(self, queueItem)
+          return
+        }, undefined, options.type)
+      } else {
+<span class="cstat-no" title="statement not covered" >        execQueueItem.call(this, queueItem)</span>
+      }
+    } else {
+<span class="cstat-no" title="statement not covered" >      this.queue.push(queueItem)</span>
+    }
+  }
+&nbsp;
+  var dequeue = function(queueItem) {
+    //return the item's connection to the pool
+    <span class="missing-if-branch" title="else path not taken"" >E</span>if (this.pool) {
+      this.pool.release(queueItem.client)
+    }
+    this.activeQueue = without(this.activeQueue, queueItem)
+  }
+&nbsp;
+  var transferQueuedItems = function(count) {
+    for(var i = 0; i &lt; count; i++) {
+      var queueItem = this.queue.shift();
+      <span class="missing-if-branch" title="if path not taken"" >I</span>if (queueItem) {
+<span class="cstat-no" title="statement not covered" >        enqueue.call(this, queueItem)</span>
+      }
+    }
+  }
+&nbsp;
+  var afterQuery = function(queueItem) {
+    dequeue.call(this, queueItem)
+    transferQueuedItems.call(this, this.maxConcurrentQueries - this.activeQueue.length)
+    disconnectIfNoConnections.call(this)
+  }
+&nbsp;
+&nbsp;
+  var execQueueItem = function(queueItem) {
+    var self = this
+&nbsp;
+    queueItem.query
+      .success(function(){ afterQuery.call(self, queueItem) })
+      .error(function(){ afterQuery.call(self, queueItem) })
+&nbsp;
+    queueItem.query.run(queueItem.sql, queueItem.client)
+  }
+&nbsp;
+  ConnectorManager.prototype.__defineGetter__('hasQueuedItems', function() {
+    return (this.queue.length &gt; 0) || (this.activeQueue.length &gt; 0) || (this.client &amp;&amp; <span class="branch-3 cbranch-no" title="branch not covered" >this.client._queue </span>&amp;&amp; (<span class="branch-4 cbranch-no" title="branch not covered" >this.client._queue.length &gt; 0)</span>)
+  })
+&nbsp;
+  // legacy
+  ConnectorManager.prototype.__defineGetter__('hasNoConnections', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return !this.hasQueuedItems</span>
+  })
+&nbsp;
+  ConnectorManager.prototype.__defineGetter__('isConnected', function() {
+    return this.client != null
+  })
+&nbsp;
+  var disconnectIfNoConnections = function() {
+    var self = this
+&nbsp;
+    this.disconnectTimeoutId &amp;&amp; clearTimeout(this.disconnectTimeoutId)
+    this.disconnectTimeoutId = setTimeout(function() {
+      self.isConnected &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!self.hasQueuedItems </span>&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >self.disconnect()</span>
+    }, 100)
+  }
+&nbsp;
+  return ConnectorManager
+})()
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jan 07 2014 19:27:42 GMT+0100 (CET)</div>
+</div>
+
+<script src="../../../../prettify.js"></script>
+
+<script src="http://yui.yahooapis.com/3.6.0/build/yui/yui-min.js"></script>
+<script>
+
+    YUI().use('datatable', function (Y) {
+
+        var formatters = {
+          pct: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              try {
+                  return o.value.toFixed(2) + '%';
+              } catch (ex) { return o.value + '%'; }
+          },
+          html: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.record.get(o.column.key + '_html');
+          }
+        },
+          defaultFormatter = function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.value;
+          };
+
+        function getColumns(theadNode) {
+            var colNodes = theadNode.all('tr th'),
+                cols = [],
+                col;
+            colNodes.each(function (colNode) {
+                col = {
+                    key: colNode.getAttribute('data-col'),
+                    label: colNode.get('innerHTML') || ' ',
+                    sortable: !colNode.getAttribute('data-nosort'),
+                    className: colNode.getAttribute('class'),
+                    type: colNode.getAttribute('data-type'),
+                    allowHTML: colNode.getAttribute('data-html') === 'true' || colNode.getAttribute('data-fmt') === 'html'
+                };
+                col.formatter = formatters[colNode.getAttribute('data-fmt')] || defaultFormatter;
+                cols.push(col);
+            });
+            return cols;
+        }
+
+        function getRowData(trNode, cols) {
+            var tdNodes = trNode.all('td'),
+                    i,
+                    row = { classes: {} },
+                    node,
+                    name;
+            for (i = 0; i < cols.length; i += 1) {
+                name = cols[i].key;
+                node = tdNodes.item(i);
+                row[name] = node.getAttribute('data-value') || node.get('innerHTML');
+                row[name + '_html'] = node.get('innerHTML');
+                row.classes[name] = node.getAttribute('class');
+                //Y.log('Name: ' + name + '; Value: ' + row[name]);
+                if (cols[i].type === 'number') { row[name] = row[name] * 1; }
+            }
+            //Y.log(row);
+            return row;
+        }
+
+        function getData(tbodyNode, cols) {
+            var data = [];
+            tbodyNode.all('tr').each(function (trNode) {
+                data.push(getRowData(trNode, cols));
+            });
+            return data;
+        }
+
+        function replaceTable(node) {
+            if (!node) { return; }
+            var cols = getColumns(node.one('thead')),
+                data = getData(node.one('tbody'), cols),
+                table,
+                parent = node.get('parentNode');
+
+            table = new Y.DataTable({
+                columns: cols,
+                data: data,
+                sortBy: 'file'
+            });
+            parent.set('innerHTML', '');
+            table.render(parent);
+        }
+
+        Y.on('domready', function () {
+            replaceTable(Y.one('div.coverage-summary table'));
+            if (typeof prettyPrint === 'function') {
+                prettyPrint();
+            }
+        });
+    });
+</script>
+</body>
+</html>

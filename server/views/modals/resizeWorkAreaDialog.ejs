@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h3>Resize Work Area</h3>
+</div>
+<div class="modal-body">
+
+    <p class="muted">If you experience a lot of unused space around the work area, feel free to resize it, but please be aware that larger work areas
+        might cause the need for users with lower screen resolutions to scroll to see all the content.</p>
+
+    <p>Please select one of the resizing options below</p>
+
+    <p>
+        <div class="btn-group">
+            <button type="button"
+                    class="btn"
+                    ng-model="radioModel"
+                    btn-radio="'default'"
+                    title="{{ DEFAULT_DESCRIPTION_TEXT }}">Default</button>
+            <button type="button"
+                    class="btn"
+                    ng-model="radioModel"
+                    btn-radio="'optimized'"
+                    title="{{ OPTIMIZED_DESCRIPTION_TEXT }}">Optimized</button>
+            <button type="button"
+                    class="btn"
+                    ng-model="radioModel"
+                    btn-radio="'manual'"
+                    title="{{ MANUAL_DESCRIPTION_TEXT }}">Manual</button>
+        </div>
+    </p>
+
+    <div ng-show="radioModel == 'default'">
+        <p><strong>Default size:</strong> {{ DEFAULT_DESCRIPTION_TEXT }}</p>
+    </div>
+
+    <div ng-show="radioModel == 'optimized'">
+        <p><strong>Optimized size:</strong> {{ OPTIMIZED_DESCRIPTION_TEXT }}</p>
+    </div>
+
+    <div ng-show="radioModel == 'manual'">
+        <p><strong>Manual size:</strong> {{ MANUAL_DESCRIPTION_TEXT }}</p>
+        <p><input numericinputonlydirective
+                  class="input-mini"
+                  placeholder="Width"
+                  ng-model="width"
+                  ng-maxlength="4"
+                  maxlength="4"/> px
+            <input numericinputonlydirective
+                   placeholder="Height"
+                   class="input-mini"
+                   ng-model="height"
+                   maxlength="4"/> px</p>
+    </div>
+
+    <p class="text-info">The size of the work area is shared between all users in the conference room. If the work area is resized to a smaller area, stuff that do not fit in the new area will be lost.</p>
+</div>
+<div class="modal-footer">
+    <button ng-click="onOkClicked(radioModel)" class="btn btn-primary">Ok</button>
+    <button ng-click="onCancelClicked()" class="btn">Cancel</button>
+</div>

@@ -1,0 +1,4 @@
+mockDialog =
+{
+    close: function(result){}
+}
