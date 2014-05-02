@@ -1,0 +1,39 @@
+@media handheld, screen and (max-width: 519px) {
+
+    .modal {
+        position: fixed;
+        top: 30px;
+        right: 20px;
+        left: 20px;
+        width: auto;
+        margin: 0;
+    }
+
+    #login-container-left-pane {
+        float: left;
+        width: 90%; /* fallback for browsers without support for calc() */
+        width: calc(100% - 20px);
+    }
+
+    #login-container-right-pane {
+        margin-top: 10px;
+        float: left;
+        width: 90%; /* fallback for browsers without support for calc() */
+        width: calc(100% - 20px);
+    }
+
+    #join-room-button {
+        margin-top: 10px;
+    }
+
+    .front-page-input {
+        width:100%;
+        min-height: 30px;
+        box-sizing: border-box;
+        margin: auto;
+    }
+
+    .front-page-button {
+        min-width: 100%;
+    }
+}

@@ -1,0 +1,38 @@
+@media handheld, screen and (min-width: 760px) and (max-width: 959px) {
+
+    #login-content
+    {
+        overflow-y: auto;
+    }
+
+    #login-centralized
+    {
+        width:760px;
+    }
+
+    #login-container-left-pane
+    {
+        float: left;
+        width: 450px;
+    }
+
+    #login-container-right-pane
+    {
+        float: left;
+        margin-left: 10px;
+        width:220px;
+    }
+
+    #login-password-input
+    {
+        width:135px;
+        margin-bottom: 0px;
+    }
+
+    #login-button
+    {
+        margin-left: 3px;
+    }
+
+
+}

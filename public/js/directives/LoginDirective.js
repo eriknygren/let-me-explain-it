@@ -20,17 +20,24 @@ angularApp.directive('logindirective', function($window)
 
             function positionLoginContainer()
             {
-                var newMarginTop = 0;
-                if ($window.innerHeight > PARENT_DIV_SIZE + 50)
+                if ($window.innerWidth >= 760)
                 {
-                    newMarginTop = ($window.innerHeight / 2) - (CONTAINER_SIZE / 2);
+                    var newMarginTop = 0;
+                    if ($window.innerHeight > PARENT_DIV_SIZE + 50)
+                    {
+                        newMarginTop = ($window.innerHeight / 2) - (CONTAINER_SIZE / 2);
+                    }
+                    else
+                    {
+                        newMarginTop = ((PARENT_DIV_SIZE + 50) / 2) - (CONTAINER_SIZE / 2);
+                    }
+
+                    element.css( 'margin-top' , newMarginTop);
                 }
                 else
                 {
-                    newMarginTop = ((PARENT_DIV_SIZE + 50) / 2) - (CONTAINER_SIZE / 2);
+                    element.css( 'margin-top' , 40);
                 }
-
-                element.css( 'margin-top' , newMarginTop);
             }
         }
     };

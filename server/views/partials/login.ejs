@@ -2,7 +2,7 @@
 <div id="login-content">
     <div id="login-centralized" logindirective>
         <div id="login-container" ng-controller="LoginController">
-            <div class="no-text-selection standard-cursor">
+            <div id="login-title" class="no-text-selection standard-cursor">
                 <h1 class="front-page-text-background">LetMeExplain.It</h1></br>
                 <h5 class="front-page-text-background">The simple and hassle free collaboration tool</h5>
             </div>
@@ -11,8 +11,8 @@
                 <p>Welcome, to get started enter your room name and press go.</p>
                 <div class="form-horizontal">
                     <form ng-submit="joinRoom()">
-                        <input type="text" ng-model="roomName" class="display-inline-block" placeholder="Enter Room Name"/>
-                        <input type="submit" ng-disabled="!canClickJoin" class="btn btn-primary" value="Go"/>
+                        <input type="text" ng-model="roomName" class="front-page-input" placeholder="Enter Room Name"/>
+                        <input type="submit" ng-disabled="!canClickJoin" id="join-room-button" class="btn btn-primary front-page-button" value="Go"/>
                     </form>
                 </div>
                 <p ng-show="showroomJoinErrorText" class="text-error">{{ roomJoinErrorText }}</p>
@@ -35,11 +35,9 @@
                         <div class="horizontal-row"></div>
                         <div>
                             <form ng-submit="onLoginClicked()" class="no-margin">
-                                <input ng-model="username" placeholder="Username or email" type="text"/>
-                                <div class="form-horizontal">
-                                <input ng-model="password" id="login-password-input" placeholder="Password" type="password"/>
-                                <input type="submit" ng-disabled="!canClickLogin" value="Log in" id="login-button" class="btn btn-primary">
-                                </div>
+                                <input ng-model="username" class="front-page-input" placeholder="Username or email" type="text"/>
+                                <input ng-model="password" class="front-page-input" id="login-password-input" placeholder="Password" type="password"/>
+                                <input type="submit" ng-disabled="!canClickLogin" value="Log in" id="login-button" class="btn btn-primary front-page-button">
                             </form>
                             <p class="small-spacing">
                                 <label class="remember-forgot-password"><input type="checkbox" class="remember-check-box" ng-model="rememberUser"/><span class="muted"> Remember me</span></label>
@@ -53,10 +51,10 @@
                                 <p class="small-spacing text-error">{{ registrationErrorText }}</p>
                             </div>
                             <form ng-submit="registerUser()">
-                                <input type="text" ng-model="registerUsername" placeholder="Username"/>
-                                <input type="text" ng-model="registerEmail" placeholder="Email"/>
-                                <input type="password" ng-model="registerPassword" placeholder="Password"/>
-                                <input type="submit" ng-disabled="!canClickRegister" class="btn btn-warning pull-right" value="Sign up"/>
+                                <input type="text" ng-model="registerUsername" class="front-page-input" placeholder="Username"/>
+                                <input type="text" ng-model="registerEmail" class="front-page-input" placeholder="Email"/>
+                                <input type="password" ng-model="registerPassword" class="front-page-input" placeholder="Password"/>
+                                <input type="submit" ng-disabled="!canClickRegister" class="btn btn-warning pull-right front-page-button" value="Sign up"/>
                             </form>
                         </div>
                     </div>

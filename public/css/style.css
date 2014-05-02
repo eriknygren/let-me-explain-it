@@ -237,16 +237,15 @@ img.centralized
 
 #front-page-bg {
     position: fixed;
-    top:25px;
+    top:0px;
     left: 0;
     right:0;
-    bottom: 25px;
+    bottom: 0px;
     background: #ECEBE8 url("../images/letmeexplainit-bg.png") repeat;
 }
 
 #login-content
 {
-    min-height: 600px;
     overflow-y: auto;
 }
 
@@ -255,27 +254,21 @@ img.centralized
 {
     margin: auto;
     position: absolute;
-    left:0;
-    right:0;
-    width:940px;
-    height:400px;
+    left:10px;
+    right:10px;
 }
 
 #login-container
 {
-    float: right;
     z-index: 25;
-    width:770px;
     background-color: transparent;
 }
 
 #login-container-left-pane
 {
-    float: left;
     /* Fallback for web browsers that doesn't support RGBa */
     background-color: rgb(243, 245, 247);
     padding:8px;
-    width:490px;
     border: 1px solid;
     border-radius:5px;
 }
@@ -287,21 +280,14 @@ img.centralized
     background-color: rgb(243, 245, 247);
     border: 1px solid;
     padding:8px;
-    margin-left: 10px;
     width:220px;
     border-radius:5px;
-}
-
-#login-button
-{
-    margin-left: 3px;
+    margin-bottom: 45px;
 }
 
 #login-password-input
 {
     float:left;
-    width:135px;
-    margin-bottom: 0px;
 }
 
 #loading-room-text

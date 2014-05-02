@@ -1,0 +1,46 @@
+@media handheld, screen and (min-width: 520px) and (max-width: 759px) {
+
+    .modal {
+        position: fixed;
+        top: 30px;
+        right: 20px;
+        left: 20px;
+        width: auto;
+        margin: 0;
+    }
+
+    #login-centralized
+    {
+        width:500px;
+    }
+
+    #login-container-left-pane
+    {
+        float: left;
+        width: 480px;
+    }
+
+    #login-container-right-pane
+    {
+        margin-top: 10px;
+        float: left;
+        width:480px;
+    }
+
+    #join-room-button {
+        margin-top: 10px;
+    }
+
+    .front-page-input {
+        width:100%;
+        min-height: 30px;
+        box-sizing: border-box;
+        margin: auto;
+    }
+
+
+    .front-page-button {
+        min-width: 100%;
+    }
+
+}

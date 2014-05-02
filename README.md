@@ -45,6 +45,8 @@ The unit test coverage is not amazing, but I'm working on it.
 
 Currently all AngularJS controllers are fully tested, to run those tests, install *karma-cli* and install the dependencies in the *public/tests* folder using `npm install`.
 
+Proceed to run the tests by typing `karma start` in the *public/tests* folder
+
 For server side unit testing, mocha is used. Install mocha and head into the *server* folder and type `mocha` in your terminal/cmd to run these tests.
 
 # ENJOY YOUR CONFERENCING!! #
