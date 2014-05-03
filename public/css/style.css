@@ -314,40 +314,6 @@ img.centralized
     right: 0px;
 }
 
-#left-pane
-{
-    position: fixed;
-    left: 0px;
-    top: 25px;
-    bottom: 25px;
-    background-color: #F3F5F7;
-    width: 225px;
-    border-right: 1px solid;
-}
-
-#center-pane
-{
-    position: fixed;
-    top: 25px;
-    bottom: 25px;
-    left: 226px;
-    right: 226px;
-    padding: 5px 19px 4px 19px;
-    background-color: #ECEBE8;
-    overflow-y: auto;
-}
-
-#right-pane
-{
-    position: fixed;
-    right: 0px;
-    top: 25px;
-    bottom: 25px;
-    background-color: #F3F5F7;
-    width: 225px;
-    border-left: 1px solid;
-}
-
 #footer-bar
 {
     position: fixed;
@@ -360,10 +326,17 @@ img.centralized
     padding-top: 3px;
 }
 
+#center-pane
+{
+    padding: 5px 0 4px 0;
+    background-color: #ECEBE8;
+    overflow-y: auto;
+}
+
 #toolbar
 {
     z-index:25;
-    margin-top: 7px;
+    margin: 7px 10px 0 0;
     float: right;
 }
 
@@ -377,12 +350,14 @@ img.centralized
 {
     width:208px !important;
     right: auto !important;
-    left: -150px !important;
+    left: -150px;
 }
 
-#tabs
+#left-pane
 {
-
+    background-color: #F3F5F7;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #canvas
@@ -401,8 +376,8 @@ img.centralized
 
 #map
 {
-    width:510px;
-    height: 510px;
+    width:500px;
+    height: 500px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -411,28 +386,29 @@ img.centralized
 
 #chat-messages
 {
-
-    width: 221px;
     padding: 2px;
+    height: auto;
     word-wrap: break-word;
     overflow-wrap: break-word;
     overflow-y: scroll;
     overflow-x: hidden;
-
 }
 
 #chat
 {
-    height: 600px;
-    width: 225px;
+
 }
 
 #chat-message-input
 {
     float: left;
-    width: 193px;
     height: 16px;
     padding: 2px;
+}
+
+.nav-tabs
+{
+    padding-left: 10px;
 }
 
 .chat-text
@@ -442,12 +418,6 @@ img.centralized
 
 #local-user
 {
-    position:fixed;
-    bottom: 25px;
-    right: 0px;
-    border-top: 1px solid;
-    height:99px;
-    width:225px;
     background-color: #ECEBE8;
     overflow: hidden;
 }
@@ -457,7 +427,6 @@ img.centralized
     float: left;
     border-bottom: 1px solid;
     height:99px;
-    width:225px;
     background-color: #ECEBE8;
     overflow: hidden;
 }
@@ -480,14 +449,19 @@ img.centralized
 .user-settings
 {
     float:left;
-    padding: 2px;
     height:99px;
-    width: 121px;
+    padding: 2px;
+}
+
+.remote-user-settings
+{
+    float:left;
+    height:99px;
+    padding: 2px;
 }
 
 .volume-control
 {
-    width:60px;
     height:20px;
 }
 
@@ -503,4 +477,9 @@ img.centralized
     height: 16px;
     width: 16px;
     background: url("../images/logo.png") 0px 3px no-repeat;
+}
+
+#scroll-to-menu
+{
+    display: none;
 }

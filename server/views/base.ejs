@@ -49,6 +49,7 @@
         <script src="/js/directives/NumericInputOnlyDirective.js"></script>
         <script src="/js/directives/MapDirective.js"></script>
         <script src="/js/directives/ColorPickerIconDirective.js"></script>
+        <script src="/js/directives/ScrollToMenuDirective.js"></script>
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
         <link rel="stylesheet" type="text/css" href="/css/0+.css" />
         <link rel="stylesheet" type="text/css" href="/css/520+.css" />
@@ -80,11 +81,14 @@
 <div ng-view></div>
 
 <div id="footer-bar" class="no-text-selection">
-        <a class="github-referral header-footer-text" href="https://github.com/eriknygren/let-me-explain-it" target="_blank">
-            <img class="github-logo-small pull-left" src="/images/GitHub-Mark-Light-32px.png"/>
-            <span class="separator muted pull-left"> · </span>
-            <span class="pull-left">View on Github</span>
-        </a>
+    <a class="github-referral header-footer-text" href="https://github.com/eriknygren/let-me-explain-it" target="_blank">
+        <img class="github-logo-small pull-left" src="/images/GitHub-Mark-Light-32px.png"/>
+        <span class="separator muted pull-left"> · </span>
+        <span class="pull-left">View on Github</span>
+    </a>
+
+    <button id="scroll-to-menu" class="btn btn-mini btn-inverse" scrolltomenudirective>Scroll to menu</button>
+
     <div class="copyright-text header-footer-text">&copy; Erik Nygren</div>
 </div>
 </body>

@@ -11,6 +11,7 @@ angularApp.factory('clientStatusService', function(angularBroadcastService, $roo
     var LOCAL_USER_CONTAINER_HEIGHT = 100;
     var DEFAULT_CANVAS_WIDTH = 510;
     var DEFAULT_CANVAS_HEIGHT = 510;
+    var RESPONSIVE_NAV_BAR_HEIGHT = 30;
     var CANVAS_WIDTH_OFFSET = RIGHT_PANE_WIDTH + LEFT_PANE_WIDTH + WORKSPACE_WIDTH_PADDING;
     var CANVAS_HEIGHT_OFFSET = HEADER_BAR_HEIGHT + FOOTER_BAR_HEIGHT + WORKSPACE_HEIGHT_PADDING;
 
@@ -111,6 +112,53 @@ angularApp.factory('clientStatusService', function(angularBroadcastService, $roo
         chatMargins = chatMargins + LOCAL_USER_CONTAINER_HEIGHT;
 
         return chatMargins;
+    };
+
+    clientStatusService.getNavBarHeight = function()
+    {
+        return RESPONSIVE_NAV_BAR_HEIGHT;
+    };
+
+    clientStatusService.is_x960_CSS = function()
+    {
+        if ($window.innerWidth >= 960)
+        {
+            return true;
+        }
+
+        return false;
+    };
+
+    clientStatusService.is_x760_CSS = function()
+    {
+        if ($window.innerWidth < 960 && $window.innerWidth >= 760)
+        {
+            return true;
+        }
+
+        return false;
+    };
+
+    clientStatusService.is_x520_y440_CSS = function()
+    {
+        if($window.innerWidth < 760 && $window.innerWidth >= 520
+            && $window.innerHeight >= 440)
+        {
+            return true;
+        }
+
+        return false;
+    };
+
+    clientStatusService.is_x0_y0_CSS = function()
+    {
+        if($window.innerWidth < 520 ||
+            ($window.innerWidth < 760 && $window.innerHeight < 440))
+        {
+            return true;
+        }
+
+        return false;
     };
 
     $rootScope.$on('localUser:update', function(event, args)

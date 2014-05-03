@@ -82,26 +82,7 @@
 
     #loading-room-text
     {
-        margin: auto;
-        position: absolute;
         width: 550px;
-        height: 200px;
-        top:0;
-        left:0;
-        bottom:0;
-        right:0;
-    }
-
-    #header-bar
-    {
-        position: fixed;
-        z-index: 25;
-        padding-top: 2px;
-        height: 23px;
-        background-color: #2C2C2D;
-        top: 0px;
-        left: 0px;
-        right: 0px;
     }
 
     #left-pane
@@ -122,9 +103,6 @@
         bottom: 25px;
         left: 226px;
         right: 226px;
-        padding: 5px 19px 4px 19px;
-        background-color: #ECEBE8;
-        overflow-y: auto;
     }
 
     #right-pane
@@ -138,31 +116,12 @@
         border-left: 1px solid;
     }
 
-    #footer-bar
-    {
-        position: fixed;
-        z-index: 25;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
-        background-color: #2C2C2D;
-        height: 22px;
-        padding-top: 3px;
-    }
-
     #toolbar
     {
         z-index:25;
         margin-top: 7px;
         float: right;
     }
-
-    #invite-friends-button
-    {
-        float:left;
-        margin-right: 4px;
-    }
-
 
     #tabs
     {
@@ -171,33 +130,12 @@
 
     #chat-messages
     {
-
         width: 221px;
-        padding: 2px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        overflow-y: scroll;
-        overflow-x: hidden;
-
-    }
-
-    #chat
-    {
-        height: 600px;
-        width: 225px;
     }
 
     #chat-message-input
     {
-        float: left;
         width: 193px;
-        height: 16px;
-        padding: 2px;
-    }
-
-    .chat-text
-    {
-        font-size: 12px;
     }
 
     #local-user
@@ -206,44 +144,35 @@
         bottom: 25px;
         right: 0px;
         border-top: 1px solid;
+        border-left: 1px solid;
         height:99px;
         width:225px;
-        background-color: #ECEBE8;
-        overflow: hidden;
     }
 
     .remote-user
     {
-        float: left;
-        border-bottom: 1px solid;
-        height:99px;
-        width:225px;
-        background-color: #ECEBE8;
-        overflow: hidden;
-    }
-
-    .user-picture
-    {
-        float: left;
-        height:99px;
-        width:99px;
-        border-right: 1px solid;
-    }
-
-    .user-picture-settings-screen
-    {
-        height:99px;
-        width:99px;
-        border: 1px solid;
+        width:220px;
     }
 
     .user-settings
     {
-        float:left;
-        padding: 2px;
-        height:99px;
         width: 121px;
     }
+
+    .remote-user-settings
+    {
+        width: 100px;
+    }
+
+    .volume-control
+    {
+        width:40px;
+    }
+
+    .responsive-nav {
+        display: none;
+    }
+
 
 
 }

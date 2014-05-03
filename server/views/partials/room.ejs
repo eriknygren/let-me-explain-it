@@ -5,13 +5,38 @@
         </div>
     </div>
     <div ng-show="isLoaded">
-        <div id="left-pane">
+        <div class="responsive-nav">
+            <div class="btn-group nav-group">
+                <button type="button"
+                        class="btn btn-inverse collaborate-nav-option"
+                        ng-model="currentView"
+                        btn-radio="'collaborate'"
+                        title="Collaborate">Collaborate</button>
+                <button type="button"
+                        class="btn btn-inverse chat-users-nav-option"
+                        ng-model="currentView"
+                        btn-radio="'chat+users'"
+                        title="Chat">Chat & Users</button>
+                <button type="button"
+                        class="btn btn-inverse chat-nav-option"
+                        ng-model="currentView"
+                        btn-radio="'chat'"
+                        title="Chat">Chat</button>
+                <button type="button"
+                        class="btn btn-inverse users-nav-option"
+                        ng-model="currentView"
+                        btn-radio="'users'"
+                        title="Users">Users</button>
+            </div>
+        </div>
+        <div id="left-pane"
+             ng-show="currentView == 'users' || currentView == 'chat+users' || currentView == 'all'">
             <div id="remote-users" ng-controller="RemoteUsersController">
                 <div class="remote-user" ng-repeat="user in remoteUsers">
                     <div class="user-picture">
                         <img class="profile-picture" ng-src="{{user.picture}}"/>
                     </div>
-                    <div class="user-settings">
+                    <div class="remote-user-settings">
                         <p class="small-spacing ellipsis">{{ user.username }}</p>
                         <div class="horizontal-row"></div>
                         <div>
@@ -40,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div id="center-pane">
+        <div id="center-pane" ng-hide="singleViewMode && currentView != 'collaborate'">
             <div id="toolbar" ng-controller="ToolbarController">
                 <button id="invite-friends-button" class="btn btn-mini" ng-click="onInviteFriendsClicked()">Invite Friends</button>
                 <div ng-show="activeTab == 'Drawing Board'" class="pull-left">
@@ -71,7 +96,7 @@
                 <tabset>
                     <tab select="tabSelected('Drawing Board')" heading="Drawing Board">
                         <div>
-                            <canvas width="510" height="510" id="canvas" drawdirective></canvas>
+                            <canvas width="500" height="500" id="canvas" drawdirective></canvas>
                         </div>
                     </tab>
                     <tab select="tabSelected('Maps')" heading="Maps">
@@ -82,48 +107,51 @@
                 </tabset>
             </div>
         </div>
-        <div id="right-pane">
+        <div id="right-pane"
+             ng-show="currentView == 'chat' || currentView == 'chat+users' || currentView == 'all'">
             <div id="chat" ng-controller="ChatController">
                 <div id="chat-messages" chatmessagesdirective></div>
                 <form ng-submit="sendMessage()">
                     <div class="input-append">
-                        <input id="chat-message-input"
-                                  type="text"
-                                  ng-model="chatMessage"
-                                  placeholder="Write a chat message here">
-                        <input class="btn btn-mini btn-inverse" type="submit" value=">>">
+                        <div id="chat-message-input-container">
+                            <input id="chat-message-input"
+                                      type="text"
+                                      ng-model="chatMessage"
+                                      placeholder="Write a chat message here">
+                        </div>
+                        <input id="chat-message-button" class="btn btn-mini btn-inverse" type="submit" value=">>">
                     </div>
                 </form>
             </div>
-            <div id="local-user" ng-controller="LocalUserController">
-                <div class="user-picture">
-                    <img class="profile-picture" ng-src="{{ picture }}"/>
-                </div>
-                <div class="user-settings">
-                    <p class="small-spacing"><small><strong>Your profile</strong></small></p>
-                    <p class="small-spacing ellipsis">{{ username }}</p>
-                    <div class="horizontal-row"></div>
-                    <div>
-                        <div ng-show="isWebRTCSupported">
-                            <button class="btn btn-mini btn-block btn-primary"
-                                    title="Turn on voice chat"
-                                    ng-model="isVoiceChatEnabled"
-                                    btn-checkbox
-                                    btn-checkbox-true="true"
-                                    btn-checkbox-false="false">
-                                <div ng-show="!isVoiceChatEnabled"><i class="icon-volume-up icon-white"></i> Enable Voice Chat</div>
-                                <div ng-show="isVoiceChatEnabled"><i class="icon-volume-off icon-white"></i> Disable Voice Chat</div>
-                            </button>
-                        </div>
-                        <div ng-show="!isWebRTCSupported">
-                            <p>Voice Chat is not supported in your browser. To enable voice communication,
-                            please use an updated version of Chrome or Firefox.</p>
-                        </div>
-                        <div class="small-vertical-spacing"></div>
+        </div>
+        <div ng-hide="singleViewMode && (currentView == 'collaborate' || currentView == 'chat')" id="local-user" ng-controller="LocalUserController">
+            <div class="user-picture">
+                <img class="profile-picture" ng-src="{{ picture }}"/>
+            </div>
+            <div class="user-settings">
+                <p class="small-spacing"><small><strong>Your profile</strong></small></p>
+                <p class="small-spacing ellipsis">{{ username }}</p>
+                <div class="horizontal-row"></div>
+                <div>
+                    <div ng-show="isWebRTCSupported">
+                        <button class="btn btn-mini btn-block btn-primary"
+                                title="Turn on voice chat"
+                                ng-model="isVoiceChatEnabled"
+                                btn-checkbox
+                                btn-checkbox-true="true"
+                                btn-checkbox-false="false">
+                            <div ng-show="!isVoiceChatEnabled"><i class="icon-volume-up icon-white"></i> Enable Voice Chat</div>
+                            <div ng-show="isVoiceChatEnabled"><i class="icon-volume-off icon-white"></i> Disable Voice Chat</div>
+                        </button>
                     </div>
-
-                    <button class="btn btn-block btn-mini" ng-click="showLocalUserOptions()">Options</button>
+                    <div ng-show="!isWebRTCSupported">
+                        <p>Voice Chat is not supported in your browser. To enable voice communication,
+                            please use an updated version of Chrome or Firefox.</p>
+                    </div>
+                    <div class="small-vertical-spacing"></div>
                 </div>
+
+                <button class="btn btn-block btn-mini" ng-click="showLocalUserOptions()">Options</button>
             </div>
         </div>
     </div>

@@ -34,5 +34,112 @@
         margin-left: 3px;
     }
 
+    #loading-room-text
+    {
+        width: 550px;
+    }
 
+    #center-pane
+    {
+        position: fixed;
+        top: 25px;
+        bottom: 25px;
+        left: 0px;
+        right: 226px;
+    }
+
+    #right-pane
+    {
+        position: fixed;
+        right: 0px;
+        top: 55px;
+        bottom: 25px;
+        background-color: #F3F5F7;
+        width: 225px;
+        border-left: 1px solid;
+    }
+
+    #left-pane
+    {
+        position: fixed;
+        right: 0px;
+        top: 55px;
+        bottom: 125px;
+        background-color: #F3F5F7;
+        width: 225px;
+        border-left: 1px solid;
+    }
+
+    #chat-messages
+    {
+        width: 221px;
+    }
+
+    #chat-message-input
+    {
+        width: 193px;
+    }
+
+    #local-user
+    {
+        position:fixed;
+        bottom: 25px;
+        right: 0px;
+        border-top: 1px solid;
+        border-left: 1px solid;
+        height:99px;
+        width:225px;
+    }
+
+    .remote-user
+    {
+        width:220px;
+    }
+
+    .user-settings
+    {
+        width: 121px;
+    }
+
+    .remote-user-settings
+    {
+        width: 100px;
+    }
+
+    .volume-control
+    {
+        width:40px;
+    }
+
+    .responsive-nav {
+        position: fixed;
+        width: 225px;
+        right: 0px;
+        top: 25px;
+        height: 30px;
+        border-left: 1px solid;
+    }
+
+    .collaborate-nav-option {
+        display: none;
+    }
+
+    .chat-users-nav-option {
+        display: none;
+    }
+
+    .nav-group {
+        width: 100%;
+        margin-left: 1px;
+        background-color: #363636
+    }
+
+    .nav-group .btn {
+        width: 50%;
+        webkit-border-radius: 0px !important;
+        border-radius: 0px !important;
+        -webkit-border-radius: 0px !important;
+        border-radius: 0px !important;
+
+    }
 }

@@ -1,4 +1,5 @@
-@media handheld, screen and (max-width: 519px) {
+@media handheld, screen and (max-width: 519px),
+handheld, screen and (max-height: 439px) and (max-width: 759px) {
 
     .modal {
         position: fixed;
@@ -36,4 +37,159 @@
     .front-page-button {
         min-width: 100%;
     }
+
+    #center-pane {
+        position: fixed;
+        top: 55px;
+        bottom: 25px;
+        left: 0px;
+        right: 226px;
+    }
+
+    #loading-room-text
+    {
+        width: 270px;
+    }
+
+    .responsive-nav {
+        position: fixed;
+        width: auto;
+        right: 0px;
+        left: 0px;
+        top: 25px;
+        height: 30px;
+    }
+
+    .nav-group {
+        width: 100%;
+        background-color: #363636
+    }
+
+    .nav-group .btn {
+        width: 33.33%;
+        webkit-border-radius: 0px !important;
+        border-radius: 0px !important;
+        -webkit-border-radius: 0px !important;
+        border-radius: 0px !important;
+
+    }
+
+    .chat-users-nav-option {
+        display: none;
+    }
+
+    #center-pane {
+        position: fixed;
+        top: 55px;
+        bottom: 25px;
+        left: 0;
+        right: 0;
+    }
+
+    #left-pane
+    {
+        position: fixed;
+        left: 0;
+        right: 0;
+        width: auto;
+        top: 55px;
+        bottom: 125px;
+        background-color: #F3F5F7;
+    }
+
+    #right-pane
+    {
+        position: fixed;
+        left: 0;
+        right: 0;
+        width: auto;
+        top: 55px;
+        bottom: 26px;
+        background-color: #F3F5F7;
+    }
+
+    #chat-message-input-container
+    {
+        position: fixed;
+        left: 0px;
+        right: 30px;
+        width: auto;
+        bottom: 26px;
+    }
+
+    #chat-message-input
+    {
+        width: 100%;
+    }
+
+    #chat-message-button
+    {
+        position: fixed;
+        right: -2px;
+        bottom: 26px;
+    }
+
+    #local-user
+    {
+        position:fixed;
+        bottom: 25px;
+        right: 0px;
+        left:0px;
+        width: auto;
+        border-top: 1px solid;
+        height:99px;
+    }
+
+    .remote-user {
+        width: 100%;
+        position: relative;
+    }
+
+    .user-settings
+    {
+        position: fixed;
+        left: 100px;
+        right: 0px;
+        width: auto;
+        height: 99px;
+    }
+
+    .remote-user-settings
+    {
+        width: 100%;
+        width: calc(100% - 100px);
+        position: absolute;
+        margin-left: 100px;
+    }
+
+    .github-referral {
+        display: none !important;
+    }
+
+    #scroll-to-menu {
+        display: block !important;
+        float: left;
+        margin-left: 2px;
+        margin-top: -1px;
+    }
+}
+
+@media handheld, screen and (max-width: 420px) {
+
+    #toolbar {
+        margin: 0 0 0 10px;
+        float: none !important;
+        display: inline-block;
+    }
+
+    .header-title
+    {
+        display: none !important;
+    }
+
+    #maps-follow-dropdown-menu
+    {
+        left: 0px !important;
+    }
+
 }

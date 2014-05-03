@@ -1,4 +1,4 @@
-@media handheld, screen and (min-width: 520px) and (max-width: 759px) {
+@media handheld, screen and (min-width: 520px) and (max-width: 759px) and (min-height: 440px){
 
     .modal {
         position: fixed;
@@ -41,6 +41,124 @@
 
     .front-page-button {
         min-width: 100%;
+    }
+
+    .responsive-nav {
+        position: fixed;
+        width: auto;
+        right: 0px;
+        left: 0px;
+        top: 25px;
+        height: 30px;
+    }
+
+    .nav-group {
+        width: 100%;
+        background-color: #363636
+    }
+
+    .nav-group .btn {
+        width: 50%;
+        webkit-border-radius: 0px !important;
+        border-radius: 0px !important;
+        -webkit-border-radius: 0px !important;
+        border-radius: 0px !important;
+
+    }
+
+    #loading-room-text
+    {
+        width: 500px;
+    }
+
+    .users-nav-option {
+        display: none;
+    }
+
+    .chat-nav-option {
+        display: none;
+    }
+
+    #center-pane {
+        position: fixed;
+        top: 55px;
+        bottom: 25px;
+        left: 0px;
+        right: 0px;
+    }
+
+    #left-pane
+    {
+        position: fixed;
+        left: 0px;
+        width: 225px;
+        top: 55px;
+        bottom: 25px;
+        background-color: #F3F5F7;
+        border-right: 1px solid;
+    }
+
+    #right-pane
+    {
+        position: fixed;
+        width: auto;
+        right: 0px;
+        left: 226px;
+        top: 55px;
+        bottom: 25px;
+        background-color: #F3F5F7;
+    }
+
+    #chat-message-input-container
+    {
+        position: fixed;
+        left: 226px;
+        right: 30px;
+        width: auto;
+        bottom: 125px;
+    }
+
+    #chat-message-input
+    {
+        width: 100%;
+    }
+
+    #chat-message-button
+    {
+        position: fixed;
+        right: -2px;
+        bottom: 125px;
+    }
+
+    #local-user
+    {
+        position:fixed;
+        bottom: 25px;
+        right: 0px;
+        left:226px;
+        width: auto;
+        border-top: 1px solid;
+        height:99px;
+    }
+
+    .remote-user
+    {
+        width:220px;
+    }
+
+
+    .remote-user-settings
+    {
+        width: 100px;
+    }
+
+    .user-settings
+    {
+        position:fixed;
+        left:326px;
+        right: 0px;
+        width: auto;
+        height:99px;
     }
 
 }
