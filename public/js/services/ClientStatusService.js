@@ -12,8 +12,6 @@ angularApp.factory('clientStatusService', function(angularBroadcastService, $roo
     var DEFAULT_CANVAS_WIDTH = 510;
     var DEFAULT_CANVAS_HEIGHT = 510;
     var RESPONSIVE_NAV_BAR_HEIGHT = 30;
-    var CANVAS_WIDTH_OFFSET = RIGHT_PANE_WIDTH + LEFT_PANE_WIDTH + WORKSPACE_WIDTH_PADDING;
-    var CANVAS_HEIGHT_OFFSET = HEADER_BAR_HEIGHT + FOOTER_BAR_HEIGHT + WORKSPACE_HEIGHT_PADDING;
 
     var clientStatusService = {};
 
@@ -85,12 +83,12 @@ angularApp.factory('clientStatusService', function(angularBroadcastService, $roo
     {
         var result =
         {
-            width: $window.innerWidth - CANVAS_WIDTH_OFFSET,
-            height: $window.innerHeight - CANVAS_HEIGHT_OFFSET
-        }
+            width: $window.innerWidth - getCanvasWidthOffset(),
+            height: $window.innerHeight - getCanvasHeightOffset()
+        };
 
         return result;
-    }
+    };
 
     clientStatusService.getDefaultCanvasSize = function()
     {
@@ -98,10 +96,10 @@ angularApp.factory('clientStatusService', function(angularBroadcastService, $roo
         {
             width: DEFAULT_CANVAS_WIDTH,
             height: DEFAULT_CANVAS_HEIGHT
-        }
+        };
 
         return result;
-    }
+    };
 
     clientStatusService.getMarginsForChat = function()
     {
@@ -121,44 +119,22 @@ angularApp.factory('clientStatusService', function(angularBroadcastService, $roo
 
     clientStatusService.is_x960_CSS = function()
     {
-        if ($window.innerWidth >= 960)
-        {
-            return true;
-        }
-
-        return false;
+        return is_x960_CSS();
     };
 
     clientStatusService.is_x760_CSS = function()
     {
-        if ($window.innerWidth < 960 && $window.innerWidth >= 760)
-        {
-            return true;
-        }
-
-        return false;
+        return is_x760_CSS();
     };
 
     clientStatusService.is_x520_y440_CSS = function()
     {
-        if($window.innerWidth < 760 && $window.innerWidth >= 520
-            && $window.innerHeight >= 440)
-        {
-            return true;
-        }
-
-        return false;
+        return is_x520_y440_CSS();
     };
 
     clientStatusService.is_x0_y0_CSS = function()
     {
-        if($window.innerWidth < 520 ||
-            ($window.innerWidth < 760 && $window.innerHeight < 440))
-        {
-            return true;
-        }
-
-        return false;
+        return is_x0_y0_CSS();
     };
 
     $rootScope.$on('localUser:update', function(event, args)
@@ -182,6 +158,87 @@ angularApp.factory('clientStatusService', function(angularBroadcastService, $roo
     clientStatusService.getUserData = function()
     {
         return localUser;
+    };
+
+    function getCanvasWidthOffset()
+    {
+
+        if (is_x0_y0_CSS())
+        {
+            return 20;
+        }
+
+        if (is_x520_y440_CSS())
+        {
+            return 20;
+        }
+
+        if (is_x760_CSS())
+        {
+            return RIGHT_PANE_WIDTH + WORKSPACE_WIDTH_PADDING;
+        }
+
+        if (is_x960_CSS())
+        {
+            return RIGHT_PANE_WIDTH + LEFT_PANE_WIDTH + WORKSPACE_WIDTH_PADDING;
+        }
+
+    }
+
+    function getCanvasHeightOffset()
+    {
+        if (is_x760_CSS() || is_x960_CSS())
+        {
+            return HEADER_BAR_HEIGHT + FOOTER_BAR_HEIGHT + WORKSPACE_HEIGHT_PADDING;
+        }
+        else
+        {
+            return HEADER_BAR_HEIGHT + FOOTER_BAR_HEIGHT + WORKSPACE_HEIGHT_PADDING + RESPONSIVE_NAV_BAR_HEIGHT;
+        }
+
+
+    }
+
+    function is_x0_y0_CSS()
+    {
+        if($window.innerWidth < 520 ||
+            ($window.innerWidth < 760 && $window.innerHeight < 440))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    function is_x520_y440_CSS()
+    {
+        if ($window.innerWidth < 760 && $window.innerWidth >= 520
+            && $window.innerHeight >= 440)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    function is_x760_CSS()
+    {
+        if ($window.innerWidth < 960 && $window.innerWidth >= 760)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    function is_x960_CSS()
+    {
+        if ($window.innerWidth >= 960)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     return clientStatusService;
