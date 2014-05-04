@@ -68,7 +68,7 @@ angularApp.directive('map', function($window, $timeout, socketIOService, $dialog
                         latitude: e.latLng.lat(),
                         longitude: e.latLng.lng(),
                         title:"Left click to edit this text, right click to remove me."
-                    }
+                    };
                     socketIOService.emit('map:markerAdd', args);
                     addMarkerHandler(args);
                 });
@@ -97,8 +97,12 @@ angularApp.directive('map', function($window, $timeout, socketIOService, $dialog
                             inputText: function()
                             {
                                 return marker.title;
+                            },
+                            showDeleteButton: function()
+                            {
+                                return true;
                             }
-                        }
+                        };
 
                         var promptDialog = $dialog.dialog(editMarkerDialogOptions);
                         promptDialog.open().then(function(result)
@@ -108,8 +112,14 @@ angularApp.directive('map', function($window, $timeout, socketIOService, $dialog
                                 return;
                             }
 
+                            if (result.delete)
+                            {
+                                deleteMarkerHandler(marker);
+                                return;
+                            }
+
                             var oldTitle = marker.title;
-                            marker.setTitle(result);
+                            marker.setTitle(result.message);
 
                             var args =
                             {
@@ -117,7 +127,7 @@ angularApp.directive('map', function($window, $timeout, socketIOService, $dialog
                                 longitude: marker.position.lng(),
                                 title: marker.title,
                                 oldTitle: oldTitle
-                            }
+                            };
 
                             socketIOService.emit('map:markerTitleEdit', args);
                             editCachedMarkerTitle(args);
@@ -126,18 +136,22 @@ angularApp.directive('map', function($window, $timeout, socketIOService, $dialog
 
                     google.maps.event.addListener(marker, "rightclick", function()
                     {
+                        deleteMarkerHandler(marker);
+                    });
 
+                    function deleteMarkerHandler(marker)
+                    {
                         var args =
                         {
                             latitude: marker.position.lat(),
                             longitude: marker.position.lng(),
                             title: marker.title
-                        }
+                        };
 
                         socketIOService.emit('map:markerRemove', args);
                         removeMarkerFromMapHandler(args);
                         removeCachedMarker(args);
-                    });
+                    }
 
                     function editMarkerTitleHandler(args)
                     {

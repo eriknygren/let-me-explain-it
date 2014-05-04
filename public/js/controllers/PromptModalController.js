@@ -1,13 +1,27 @@
-angularApp.controller('PromptModalController', ['$scope', 'dialog', 'title', 'inputText',
-    function($scope, dialog, title, inputText)
+angularApp.controller('PromptModalController', ['$scope', 'dialog', 'title', 'inputText', 'showDeleteButton',
+    function($scope, dialog, title, inputText, showDeleteButton)
     {
-        $scope.title = title
+        var result =
+        {
+            delete: false,
+            message: ""
+        };
+
+        $scope.showDeleteButton = showDeleteButton;
+        $scope.title = title;
         $scope.inputText = inputText;
 
         $scope.save = function()
         {
-            dialog.close($scope.inputText);
-        }
+            result.message = $scope.inputText;
+            dialog.close(result);
+        };
+
+        $scope.delete = function()
+        {
+            result.delete = true;
+            dialog.close(result);
+        };
 
         $scope.cancel = function()
         {
