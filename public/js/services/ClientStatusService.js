@@ -107,14 +107,18 @@ angularApp.factory('clientStatusService', function(angularBroadcastService, $roo
         chatMargins = chatMargins + FOOTER_BAR_HEIGHT;
         chatMargins = chatMargins + CHAT_INPUT_CONTROLS_HEIGHT;
         chatMargins = chatMargins + CHAT_MESSAGES_CONTAINER_PADDING;
-        chatMargins = chatMargins + LOCAL_USER_CONTAINER_HEIGHT;
+
+        if (!is_x0_y0_CSS())
+        {
+            chatMargins = chatMargins + LOCAL_USER_CONTAINER_HEIGHT;
+        }
+
+        if (!is_x960_CSS())
+        {
+            chatMargins = chatMargins + RESPONSIVE_NAV_BAR_HEIGHT;
+        }
 
         return chatMargins;
-    };
-
-    clientStatusService.getNavBarHeight = function()
-    {
-        return RESPONSIVE_NAV_BAR_HEIGHT;
     };
 
     clientStatusService.is_x960_CSS = function()

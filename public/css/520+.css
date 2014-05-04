@@ -91,6 +91,12 @@
         right: 0px;
     }
 
+    #toolbar
+    {
+        margin: 7px 20px 0 0;
+        float: right;
+    }
+
     #left-pane
     {
         position: fixed;

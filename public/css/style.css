@@ -280,7 +280,6 @@ img.centralized
     background-color: rgb(243, 245, 247);
     border: 1px solid;
     padding:8px;
-    width:220px;
     border-radius:5px;
     margin-bottom: 45px;
 }
@@ -294,7 +293,6 @@ img.centralized
 {
     margin: auto;
     position: absolute;
-    width: 550px;
     height: 200px;
     top:0;
     left:0;
@@ -336,8 +334,6 @@ img.centralized
 #toolbar
 {
     z-index:25;
-    margin: 7px 10px 0 0;
-    float: right;
 }
 
 #invite-friends-button
@@ -387,7 +383,6 @@ img.centralized
 #chat-messages
 {
     padding: 2px;
-    height: auto;
     word-wrap: break-word;
     overflow-wrap: break-word;
     overflow-y: scroll;

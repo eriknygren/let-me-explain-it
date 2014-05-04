@@ -4,9 +4,6 @@ angularApp.directive('chatmessagesdirective', function(clientStatusService, $win
         restrict: "A",
         link: function(scope, element)
         {
-            var chatMargins = clientStatusService.getMarginsForChat();
-            var navBarHeight = clientStatusService.getNavBarHeight();
-
             resizeChat();
 
             scope.$on('chat:message', function(event, args)
@@ -25,14 +22,7 @@ angularApp.directive('chatmessagesdirective', function(clientStatusService, $win
             {
                 var newChatHeight;
 
-                if ($window.innerWidth >= 960)
-                {
-                    newChatHeight = $window.innerHeight - chatMargins;
-                }
-                else
-                {
-                    newChatHeight = $window.innerHeight - chatMargins - navBarHeight;
-                }
+                newChatHeight = $window.innerHeight - clientStatusService.getMarginsForChat();
 
                 element.css( 'height' , newChatHeight);
             }

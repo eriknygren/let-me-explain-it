@@ -105,6 +105,12 @@
         right: 226px;
     }
 
+    #toolbar
+    {
+        margin: 7px 10px 0 0;
+        float: right;
+    }
+
     #right-pane
     {
         position: fixed;

@@ -90,6 +90,12 @@ handheld, screen and (max-height: 439px) and (max-width: 759px) {
         right: 0;
     }
 
+    #toolbar
+    {
+        margin: 7px 20px 0 0;
+        float: right;
+    }
+
     #left-pane
     {
         position: fixed;
@@ -181,7 +187,7 @@ handheld, screen and (max-height: 439px) and (max-width: 759px) {
 @media handheld, screen and (max-width: 420px) {
 
     #toolbar {
-        margin: 0 0 0 10px;
+        margin: 0 0 0 10px !important;
         float: none !important;
         display: inline-block;
     }
