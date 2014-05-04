@@ -9,6 +9,10 @@
         margin: 0;
     }
 
+    .modal-body {
+        max-height: 250px !important;
+    }
+
     #login-centralized
     {
         width:500px;

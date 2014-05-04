@@ -10,6 +10,10 @@ handheld, screen and (max-height: 439px) and (max-width: 759px) {
         margin: 0;
     }
 
+    .modal-body {
+        max-height: 230px !important;
+    }
+
     #login-container-left-pane {
         float: left;
         width: 90%; /* fallback for browsers without support for calc() */

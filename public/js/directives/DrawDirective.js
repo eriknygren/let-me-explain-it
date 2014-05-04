@@ -15,24 +15,31 @@ angularApp.directive('drawdirective', function(angularBroadcastService, socketIO
             var lastY;
             var strokeColor;
 
-            element.bind('mousedown', function(event)
+            element.bind('mousedown', mouseDownHandler);
+            element.bind('touchstart', touchStartHandler);
+            element.bind('mousemove', mouseMoveEventHandler);
+            element.bind('touchmove', touchMoveEventHandler);
+            element.bind('mouseup touchend', mouseUpOrTouchEndHandler);
+            element.bind('mouseout touchleave', outOfBoundHandler);
+
+            function touchMoveEventHandler(event)
             {
-                event.preventDefault();
-                event.stopPropagation();
+                if (drawing && event.originalEvent.touches.length == 1)
+                {
+                    var currentCoordinates = getOffSetCoordinates(event.originalEvent);
 
-                var currentCoordinates = getOffSetCoordinates(event);
+                    var currentX = currentCoordinates.x;
+                    var currentY = currentCoordinates.y;
 
-                var currentX = currentCoordinates.x;
-                var currentY = currentCoordinates.y;
+                    draw(lastX, lastY, currentX, currentY, strokeColor, true);
 
-                lastX = currentX;
-                lastY = currentY;
-                // begins new line
-                context.beginPath();
-                drawing = true;
-            });
+                    // set current coordinates to last one
+                    lastX = currentX;
+                    lastY = currentY;
+                }
+            };
 
-            element.bind('mousemove', function(event)
+            function mouseMoveEventHandler(event)
             {
                 if (drawing)
                 {
@@ -47,21 +54,62 @@ angularApp.directive('drawdirective', function(angularBroadcastService, socketIO
                     lastX = currentX;
                     lastY = currentY;
                 }
-            });
+            };
 
-            element.bind('mouseup', function(event)
+            function mouseDownHandler(event)
+            {
+                event.preventDefault();
+                event.stopPropagation();
+
+                var currentCoordinates = getOffSetCoordinates(event);
+
+                var currentX = currentCoordinates.x;
+                var currentY = currentCoordinates.y;
+
+                lastX = currentX;
+                lastY = currentY;
+                // begins new line
+                context.beginPath();
+                drawing = true;
+            };
+
+            function touchStartHandler(e)
+            {
+                var event = e.originalEvent;
+
+                if (event.touches.length > 1)
+                {
+                    return;
+                }
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                var currentCoordinates = getOffSetCoordinates(event);
+
+                var currentX = currentCoordinates.x;
+                var currentY = currentCoordinates.y;
+
+                lastX = currentX;
+                lastY = currentY;
+                // begins new line
+                context.beginPath();
+                drawing = true;
+            };
+
+            function mouseUpOrTouchEndHandler(event)
             {
                 // stop drawing
                 drawing = false;
-            });
+            };
 
-            element.bind('mouseout', function(event)
+            function outOfBoundHandler(event)
             {
                 // stop drawing
                 drawing = false;
                 lastX = null;
                 lastY = null;
-            });
+            };
 
             function draw(lX, lY, cX, cY, color, localDraw)
             {
@@ -188,15 +236,20 @@ angularApp.directive('drawdirective', function(angularBroadcastService, socketIO
                 var x;
                 var y;
 
-                if (!event.offsetX)
+                if (event.offsetX)
+                {
+                    x = event.offsetX;
+                    y = event.offsetY;
+                }
+                else if (event.pageX)
                 {
                     x = event.pageX - element.offset().left;
                     y = event.pageY - element.offset().top;
                 }
                 else
                 {
-                    x = event.offsetX;
-                    y = event.offsetY;
+                    x = event.touches[0].pageX - element.offset().left;
+                    y = event.touches[0].pageY - element.offset().top;
                 }
 
                 return {x: x, y: y};
