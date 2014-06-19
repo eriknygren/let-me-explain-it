@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var util = require("../helpers/util");
+var util = require("../../helpers/util");
 
 describe('util', function(){
     describe('isNullOrUndefined(value)', function(){

@@ -47,6 +47,6 @@ Currently all AngularJS controllers are fully tested, to run those tests, instal
 
 Proceed to run the tests by typing `karma start` in the *public/tests* folder
 
-For server side unit testing, mocha is used. Install mocha and head into the *server* folder and type `mocha` in your terminal/cmd to run these tests.
+For server side unit testing, mocha is used and the tests are ran through a grunt file. Install mocha and head into the *server/tests/* folder and type `Grunt` in your terminal/cmd to run these tests.
 
 # ENJOY YOUR CONFERENCING!! #

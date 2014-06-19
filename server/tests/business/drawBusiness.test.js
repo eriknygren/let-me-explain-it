@@ -1,6 +1,5 @@
 var expect = require('chai').expect;
-
-var drawBusiness = require("../business/drawBusiness");
+var drawBusiness = require("../../business/drawBusiness");
 
 describe('drawBusiness', function(){
     describe('isResizeValid(width, height)', function(){

@@ -1,33 +1,14 @@
 var proxyquire =  require('proxyquire');
 var expect = require('chai').expect;
-
-var nodeMailerSuccessMock = {
-    createTransport: function(protocol, options) {
-        return {
-            sendMail: function(mailOptions, callback) {
-                return callback(null, {message: 'test'});
-            }
-        }
-    }
-};
-
-var nodeMailerErrorMock = {
-    createTransport: function(protocol, options) {
-        return {
-            sendMail: function(mailOptions, callback) {
-                return callback({ error: 'testError' }, null);
-            }
-        }
-    }
-};
+var nodemailer = require('../mocks/nodemailer');
 
 describe('emailBusiness', function(){
     describe('sendForgotPasswordEmail(recipient, newPassword, callback)', function(){
 
         it('returns null when email is successfully sent', function(){
 
-            var emailBusiness = proxyquire('../business/emailBusiness', {
-                'nodemailer': nodeMailerSuccessMock });
+            var emailBusiness = proxyquire('../../business/emailBusiness', {
+                'nodemailer': nodemailer.nodeMailerSuccessMock });
 
             emailBusiness.sendForgotPasswordEmail('test@mail.com', 'newPassword', callBackHandler);
 
@@ -39,8 +20,8 @@ describe('emailBusiness', function(){
 
         it('returns error when email is unsuccessfully sent', function(){
 
-            var emailBusiness = proxyquire('../business/emailBusiness', {
-                'nodemailer': nodeMailerErrorMock });
+            var emailBusiness = proxyquire('../../business/emailBusiness', {
+                'nodemailer': nodemailer.nodeMailerErrorMock });
 
             emailBusiness.sendForgotPasswordEmail('test@mail.com', 'newPassword', callBackHandler);
 
